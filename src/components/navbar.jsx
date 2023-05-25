@@ -44,27 +44,27 @@ const navigation = {
           id: 'guitarras',
           name: 'Guitarras',
           items: [
-            { name: 'Guitarras Eléctricas', href: '#' },
-            { name: 'Guitarras Acústicas', href: '#' },
-            { name: 'Accesorios de Guitarras', href: '#' },
+            { name: 'Guitarras Eléctricas', href: '/ElectricGuitars' },
+            { name: 'Guitarras Acústicas', href: '/AcousticGuitars' },
+            { name: 'Accesorios de Guitarras', href: '/GuitarAccessories' },
           ],
         },
         {
           id: 'bajos',
           name: 'Bajos',
           items: [
-            { name: 'Bajos Eléctricos', href: '#' },
-            { name: 'Bajos Acústicos', href: '#' },
-            { name: 'Accesorios de Bajo', href: '#' },
+            { name: 'Bajos Eléctricos', href: '/ElectricBasses' },
+            { name: 'Bajos Acústicos', href: '/AcousticBasses' },
+            { name: 'Accesorios de Bajo', href: '/BassAccessories' },
           ],
         },
         {
           id: 'amplificadores',
           name: 'Amplificadores y Efectos',
           items: [
-            { name: 'Amplificadores de Guitarra', href: '#' },
-            { name: 'Amplificadores de Bajo', href: '#' },
-            { name: 'Efectos', href: '#' },
+            { name: 'Amplificadores de Guitarra', href: '/GuitarAmps' },
+            { name: 'Amplificadores de Bajo', href: '/BassAmps' },
+            { name: 'Efectos', href: '/Effects' },
           ],
         },
         {

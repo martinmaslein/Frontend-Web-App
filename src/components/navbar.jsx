@@ -17,120 +17,81 @@ import { Fragment, useState } from 'react'
 import { Dialog, Popover, Tab, Transition } from '@headlessui/react'
 import { Bars3Icon, MagnifyingGlassIcon, ShoppingBagIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { Link } from 'react-router-dom';
+import SearchComponent from './searchComponent';
 
 
 const navigation = {
   categories: [
     {
-      id: 'women',
-      name: 'Women',
+      id: 'shop',
+      name: 'Shop',
       featured: [
         {
-          name: 'New Arrivals',
+          name: 'Productos Nuevos',
           href: '/about',
-          imageSrc: 'https://tailwindui.com/img/ecommerce-images/mega-menu-category-01.jpg',
+          imageSrc: 'https://static.guitarcenter.com/static/gc/2023/tent-pole/memorial-day/desktop/gc-md-mg-memorial-day-hp-new-arrival02-05-17-23.jpg',
           imageAlt: 'Models sitting back to back, wearing Basic Tee in black and bone.',
         },
         {
-          name: 'Basic Tees',
+          name: '10% Off',
           href: '/contact',
-          imageSrc: 'https://tailwindui.com/img/ecommerce-images/mega-menu-category-02.jpg',
+          imageSrc: 'https://static.guitarcenter.com/static/gc/2023/tent-pole/memorial-day/desktop/gc-md-mg-memorial-day-hp-used-05-17-23.jpg',
           imageAlt: 'Close up of Basic Tee fall bundle with off-white, ochre, olive, and black tees.',
         },
       ],
       sections: [
         {
-          id: 'clothing',
-          name: 'Clothing',
+          id: 'guitarras',
+          name: 'Guitarras',
           items: [
-            { name: 'Tops', href: '#' },
-            { name: 'Dresses', href: '#' },
-            { name: 'Pants', href: '#' },
-            { name: 'Denim', href: '#' },
-            { name: 'Sweaters', href: '#' },
-            { name: 'T-Shirts', href: '#' },
-            { name: 'Jackets', href: '#' },
-            { name: 'Activewear', href: '#' },
-            { name: 'Browse All', href: '#' },
+            { name: 'Guitarras Eléctricas', href: '#' },
+            { name: 'Guitarras Acústicas', href: '#' },
+            { name: 'Accesorios de Guitarras', href: '#' },
           ],
         },
         {
-          id: 'accessories',
-          name: 'Accessories',
+          id: 'bajos',
+          name: 'Bajos',
           items: [
-            { name: 'Watches', href: '#' },
-            { name: 'Wallets', href: '#' },
-            { name: 'Bags', href: '#' },
-            { name: 'Sunglasses', href: '#' },
-            { name: 'Hats', href: '#' },
-            { name: 'Belts', href: '#' },
+            { name: 'Bajos Eléctricos', href: '#' },
+            { name: 'Bajos Acústicos', href: '#' },
+            { name: 'Accesorios de Bajo', href: '#' },
           ],
         },
         {
-          id: 'brands',
-          name: 'Brands',
+          id: 'amplificadores',
+          name: 'Amplificadores y Efectos',
           items: [
-            { name: 'Full Nelson', href: '#' },
-            { name: 'My Way', href: '#' },
-            { name: 'Re-Arranged', href: '#' },
-            { name: 'Counterfeit', href: '#' },
-            { name: 'Significant Other', href: '#' },
-          ],
-        },
-      ],
-    },
-    {
-      id: 'men',
-      name: 'Men',
-      featured: [
-        {
-          name: 'New Arrivals',
-          href: '#',
-          imageSrc: 'https://tailwindui.com/img/ecommerce-images/product-page-04-detail-product-shot-01.jpg',
-          imageAlt: 'Drawstring top with elastic loop closure and textured interior padding.',
-        },
-        {
-          name: 'Artwork Tees',
-          href: '#',
-          imageSrc: 'https://tailwindui.com/img/ecommerce-images/category-page-02-image-card-06.jpg',
-          imageAlt:
-            'Three shirts in gray, white, and blue arranged on table with same line drawing of hands and shapes overlapping on front of shirt.',
-        },
-      ],
-      sections: [
-        {
-          id: 'clothing',
-          name: 'Clothing',
-          items: [
-            { name: 'Tops', href: '#' },
-            { name: 'Pants', href: '#' },
-            { name: 'Sweaters', href: '#' },
-            { name: 'T-Shirts', href: '#' },
-            { name: 'Jackets', href: '#' },
-            { name: 'Activewear', href: '#' },
-            { name: 'Browse All', href: '#' },
+            { name: 'Amplificadores de Guitarra', href: '#' },
+            { name: 'Amplificadores de Bajo', href: '#' },
+            { name: 'Efectos', href: '#' },
           ],
         },
         {
-          id: 'accessories',
-          name: 'Accessories',
+          id: 'baterias',
+          name: 'Baterias',
           items: [
-            { name: 'Watches', href: '#' },
-            { name: 'Wallets', href: '#' },
-            { name: 'Bags', href: '#' },
-            { name: 'Sunglasses', href: '#' },
-            { name: 'Hats', href: '#' },
-            { name: 'Belts', href: '#' },
+            { name: 'Baterías Acústicas', href: '#' },
+            { name: 'Baterías Electrónicas', href: '#' },
+            { name: 'Accesorios de Baterías', href: '#' },
           ],
         },
         {
-          id: 'brands',
-          name: 'Brands',
+          id: 'teclados',
+          name: 'Teclados y MIDI',
           items: [
-            { name: 'Re-Arranged', href: '#' },
-            { name: 'Counterfeit', href: '#' },
-            { name: 'Full Nelson', href: '#' },
-            { name: 'My Way', href: '#' },
+            { name: 'Pianos Digitales', href: '#' },
+            { name: 'Órganos', href: '#' },
+            { name: 'Teclados y Controladores MIDI', href: '#' },
+          ],
+        },
+        {
+          id: 'grabacion',
+          name: 'Grabación',
+          items: [
+            { name: 'Monitores de Estudio', href: '#' },
+            { name: 'Interfaces de Audio', href: '#' },
+            { name: 'Micrófonos', href: '#' },
           ],
         },
       ],
@@ -149,6 +110,14 @@ function classNames(...classes) {
 export default function Example() {
   const [open, setOpen] = useState(false)
 
+  
+  const [showSearch, setShowSearch] = useState(false);
+  
+  const handleSearchIconClick = () => {
+      setShowSearch(true);
+    };
+  
+    
   return (
     <div className="bg-white">
       {/* Mobile menu */}
@@ -264,12 +233,12 @@ export default function Example() {
                 <div className="space-y-6 border-t border-gray-200 px-4 py-6">
                   <div className="flow-root">
                     <a href="#" className="-m-2 block p-2 font-medium text-gray-900">
-                      Sign in
+                      Iniciar Sesión
                     </a>
                   </div>
                   <div className="flow-root">
                     <a href="#" className="-m-2 block p-2 font-medium text-gray-900">
-                      Create account
+                      Crear Cuenta
                     </a>
                   </div>
                 </div>
@@ -277,11 +246,11 @@ export default function Example() {
                 <div className="border-t border-gray-200 px-4 py-6">
                   <a href="#" className="-m-2 flex items-center p-2">
                     <img
-                      src="https://tailwindui.com/img/flags/flag-canada.svg"
+                      src="https://flagicons.lipis.dev/flags/4x3/ar.svg"
                       alt=""
                       className="block h-auto w-5 flex-shrink-0"
                     />
-                    <span className="ml-3 block text-base font-medium text-gray-900">CAD</span>
+                    <span className="ml-3 block text-base font-medium text-gray-900">ARG</span>
                     <span className="sr-only">, change currency</span>
                   </a>
                 </div>
@@ -291,9 +260,10 @@ export default function Example() {
         </Dialog>
       </Transition.Root>
 
+      {/* https://tailwindcss.com/docs/background-color */}
       <header className="relative bg-white">
-        <p className="flex h-10 items-center justify-center bg-indigo-600 px-4 text-sm font-medium text-white sm:px-6 lg:px-8">
-          Get free delivery on orders over $100
+        <p className="flex h-10 items-center justify-center bg-red-500 px-4 text-sm font-medium text-white sm:px-6 lg:px-8">
+        Obtenga envío gratuito en pedidos superiores a $20.000
         </p>
 
         <nav aria-label="Top" className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -311,10 +281,10 @@ export default function Example() {
               {/* Logo */}
               <div className="ml-4 flex lg:ml-0">
                 <a href="#">
-                  <span className="sr-only">Your Company</span>
+                  <span className="sr-only">Melody Marketplace</span>
                   <img
                     className="h-8 w-auto"
-                    src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
+                    src="https://res.cloudinary.com/dygwxsimn/image/upload/v1685048810/logo2_tendwb.png"
                     alt=""
                   />
                 </a>
@@ -423,32 +393,29 @@ export default function Example() {
               <div className="ml-auto flex items-center">
                 <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
                   <a href="#" className="text-sm font-medium text-gray-700 hover:text-gray-800">
-                    Sign in
+                    Iniciar Sesión
                   </a>
                   <span className="h-6 w-px bg-gray-200" aria-hidden="true" />
                   <a href="#" className="text-sm font-medium text-gray-700 hover:text-gray-800">
-                    Create account
+                    Crear Cuenta
                   </a>
                 </div>
 
                 <div className="hidden lg:ml-8 lg:flex">
                   <a href="#" className="flex items-center text-gray-700 hover:text-gray-800">
                     <img
-                      src="https://tailwindui.com/img/flags/flag-canada.svg"
+                      src="https://flagicons.lipis.dev/flags/4x3/ar.svg"
                       alt=""
                       className="block h-auto w-5 flex-shrink-0"
                     />
-                    <span className="ml-3 block text-sm font-medium">CAD</span>
+                    <span className="ml-3 block text-sm font-medium">ARG</span>
                     <span className="sr-only">, change currency</span>
                   </a>
                 </div>
 
                 {/* Search */}
                 <div className="flex lg:ml-6">
-                  <a href="#" className="p-2 text-gray-400 hover:text-gray-500">
-                    <span className="sr-only">Search</span>
-                    <MagnifyingGlassIcon className="h-6 w-6" aria-hidden="true" />
-                  </a>
+                  <SearchComponent />
                 </div>
 
                 {/* Cart */}

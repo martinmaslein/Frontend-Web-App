@@ -71,27 +71,27 @@ const navigation = {
           id: 'baterias',
           name: 'Baterias',
           items: [
-            { name: 'Baterías Acústicas', href: '#' },
-            { name: 'Baterías Electrónicas', href: '#' },
-            { name: 'Accesorios de Baterías', href: '#' },
+            { name: 'Baterías Acústicas', href: '/AcousticDrums' },
+            { name: 'Baterías Electrónicas', href: '/ElectronicDrums' },
+            { name: 'Accesorios de Baterías', href: 'DrumAccesories' },
           ],
         },
         {
           id: 'teclados',
           name: 'Teclados y MIDI',
           items: [
-            { name: 'Pianos Digitales', href: '#' },
-            { name: 'Órganos', href: '#' },
-            { name: 'Teclados y Controladores MIDI', href: '#' },
+            { name: 'Pianos Digitales', href: '/DigitalPianos' },
+            { name: 'Órganos', href: '/Organs' },
+            { name: 'Teclados y Controladores MIDI', href: '/Keyboards' },
           ],
         },
         {
           id: 'grabacion',
           name: 'Grabación',
           items: [
-            { name: 'Monitores de Estudio', href: '#' },
-            { name: 'Interfaces de Audio', href: '#' },
-            { name: 'Micrófonos', href: '#' },
+            { name: 'Monitores de Estudio', href: '/StudioMonitors' },
+            { name: 'Interfaces de Audio', href: '/AudioInterfaces' },
+            { name: 'Micrófonos', href: '/Microphones' },
           ],
         },
       ],
@@ -280,7 +280,7 @@ export default function Example() {
 
               {/* Logo */}
               <div className="ml-4 flex lg:ml-0">
-                <a href="#">
+                <a href="/">
                   <span className="sr-only">Melody Marketplace</span>
                   <img
                     className="h-8 w-auto"

@@ -8,7 +8,7 @@ import AcousticGuitars from './pages/guitars/acoustic-guitars';
 import GuitarAccessories from './pages/guitars/accessories';
 import ElectricBasses from './pages/basses/electric-basses';
 import AcousticBasses from './pages/basses/acoustic-basses';
-import BassAccesories from './pages/basses/accessories';
+import BassAccessories from './pages/basses/accessories';
 import GuitarAmps from './pages/amps/guitar-amps';
 import BassAmps from './pages/amps/bass-amps';
 import Effects from './pages/amps/effects';
@@ -38,7 +38,7 @@ class App extends Component {
 
                  <Route exact path='/ElectricBasses' element={< ElectricBasses />}></Route>
                  <Route exact path='/AcousticBasses' element={< AcousticBasses />}></Route>
-                 <Route exact path='/BassAccessories' element={< BassAccesories />}></Route>
+                 <Route exact path='/BassAccessories' element={< BassAccessories />}></Route>
 
                  <Route exact path='/GuitarAmps' element={< GuitarAmps />}></Route>
                  <Route exact path='/BassAmps' element={< BassAmps />}></Route>

@@ -1,7 +1,7 @@
 function CenterContent({ children }) {
     return (
-      <div className="min-h-screen mt-16 transition-colors bg-neutral-50 dark:bg-slate-800">
-        <div className="sm:w-4/5 w-full min-h-screen h-fit p-4 pt-5 m-auto space-y-4 shadow-lg transition-colors bg-neutral-300 dark:bg-slate-700 text-black dark:text-white">
+      <div className="bg-white">
+		   <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
           {children}
         </div>
       </div>

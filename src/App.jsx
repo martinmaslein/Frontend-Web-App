@@ -56,7 +56,7 @@ class App extends Component {
                  <Route exact path='/Microphones' element={< Microphones />}></Route>
                  <Route exact path='/StudioMonitors' element={< StudioMonitors />}></Route>
 
-                 <Route exact path='/Product/:name' element={< ProductDetails />}></Route>
+                 <Route exact path='/Product/:id/:name' element={<ProductDetails />} />
           </Routes>
           </div>
        </Router>

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 function ProductItem({ product }) {
   
   return (
-    <Link to={`/Product/${product.name}`} className="group">
+    <Link to={`/Product/${product.id}/${encodeURIComponent(product.name)}`} className="group">
       <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7">
         <img
           src={product.image_link}

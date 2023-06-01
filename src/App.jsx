@@ -23,6 +23,7 @@ import AudioInterfaces from './pages/recording/audio-interfaces';
 import Microphones from './pages/recording/microphones';
 import StudioMonitors from './pages/recording/studio-monitors';
 import ProductDetails from './pages/product';
+import Cart from './pages/cart/cart';
 
 class App extends Component {
   render() {
@@ -59,6 +60,9 @@ class App extends Component {
               <Route exact path='/StudioMonitors' element={< StudioMonitors />}></Route>
 
               <Route exact path='/Product/:id/:name' element={<ProductDetails />} />
+
+              <Route exact path='/cart' element={<Cart />} />
+
             </Routes>
           </div>
 

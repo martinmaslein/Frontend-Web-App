@@ -199,6 +199,7 @@ export default function Example() {
                     <span className="sr-only">items in cart, view bag</span>
                   </a>
                 </div>
+
               </div>
             </div>
           </div>

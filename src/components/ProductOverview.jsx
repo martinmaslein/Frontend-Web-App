@@ -1,6 +1,23 @@
 import React from 'react';
+import { useCookies } from 'react-cookie';
+
 
 function ProducOverview({ guitarDetails }) {
+
+  const [cookies, setCookie] = useCookies(['cart']);
+
+  function handleAddToCart() {
+    // Obtén el producto que se va a agregar al carrito
+
+    // Obtén la cookie actual del carrito (si existe) o inicializa una nueva lista de productos vacía
+    const cartItems = cookies.cart || [];
+
+    // Agrega el nuevo producto a la lista de productos del carrito
+    cartItems.push(product);
+
+    // Guarda la lista actualizada de productos en la cookie
+    setCookie('cart', cartItems);
+  }
 
   return (
 

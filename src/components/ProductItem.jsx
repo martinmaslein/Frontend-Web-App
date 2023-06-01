@@ -1,8 +1,24 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useCookies } from 'react-cookie';
 
 function ProductItem({ product }) {
+
+  const [cookies, setCookie] = useCookies(['cart']);
+
+  function handleAddToCart() {
+    // Obtén el producto que se va a agregar al carrito
   
+    // Obtén la cookie actual del carrito (si existe) o inicializa una nueva lista de productos vacía
+    const cartItems = cookies.cart || [];
+  
+    // Agrega el nuevo producto a la lista de productos del carrito
+    cartItems.push(product);
+  
+    // Guarda la lista actualizada de productos en la cookie
+    setCookie('cart', cartItems);
+  }
+
   return (
     <Link to={`/Product/${product.id}/${encodeURIComponent(product.name)}`} className="group">
       <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7">

@@ -5,6 +5,7 @@ import Subcategory from "src/components/Subcategory.jsx";
 
 function BassAmps() {
 	const [products, setProducts] = useState([]);
+	const [loading, setLoading] = useState(true);
 
 	const fetchProducts = async () => {
 		const API_URL = import.meta.env.VITE_REACT_APP_API_URL;
@@ -13,6 +14,7 @@ function BassAmps() {
 		const data = await response.json();
 		const productsData = data.products.data;
 		setProducts(productsData);
+		setLoading(false);
 	};
 
 	useEffect(() => {

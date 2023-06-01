@@ -28,7 +28,7 @@ function ProductDetails() {
 
   return (
 
-    <section class="text-gray-600 body-font overflow-hidden">
+    <section className="text-gray-600 body-font overflow-hidden">
       {guitarDetails ? (
         <div> 
           <ProductOverview key={guitarDetails.id} guitarDetails={guitarDetails} />

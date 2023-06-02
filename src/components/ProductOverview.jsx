@@ -1,46 +1,63 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useCookies } from 'react-cookie';
 
-function createProductObject(details){
+function createProductObject(details) {
   let object = {
-    id : details.id,
-    name : details.name,
-    image_link : details.image_link,
-    price : details.price,
-    quantity : details.quantity
+    id: details.id,
+    name: details.name,
+    image_link: details.image_link,
+    price: details.price,
+    quantity: details.quantity
   }
   return object;
 }
 
 function ProductOverview({ guitarDetails }) {
 
+  const [isOutOfStock, setIsOutOfStock] = useState(guitarDetails.hasStock);
   const [cookies, setCookie] = useCookies(['cart']);
+
+  useEffect(() => {
+    setIsOutOfStock(guitarDetails.hasStock);
+  }, [guitarDetails]);
 
   function handleAddToCart() {
     const cartItems = cookies.cart || [];
     let inCart = false;
 
-    for (let i=0; i<cartItems.length && !inCart; i++) {
-      if (cartItems[i].id == guitarDetails.id) {
-        cartItems[i].quantity = cartItems[i].quantity + 1;
+    cartItems.forEach((item) => {
+      if (item.id === guitarDetails.id) {
+        item.quantity += 1;
         inCart = true;
       }
-    }
+    });
 
-    if (cartItems.length == 0 || !inCart) {
+    if (!inCart) {
       guitarDetails.quantity = 1;
       cartItems.push(createProductObject(guitarDetails));
     }
 
-    setCookie('cart', cartItems, {path:'/'});
+    setCookie('cart', cartItems, { path: '/' });
   }
 
   return (
 
     <div className="container px-5 py-24 mx-auto">
       <div className="lg:w-4/5 mx-auto flex flex-wrap">
-        <img alt="ecommerce" className="lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center rounded" src={guitarDetails.image_link} />
-        <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
+        <img
+          alt="ecommerce"
+          className={`
+          lg:w-1/2
+          w-full
+          lg:h-auto
+          h-64
+          object-cover
+          object-center
+          rounded
+          ${isOutOfStock ? '' : 'grayscale'}
+        }`}
+          src={guitarDetails.image_link}
+        />        <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
           <h2 className="text-sm title-font text-gray-500 tracking-widest">BRAND NAME</h2>
           <h1 className="text-gray-900 text-3xl title-font font-medium mb-1">{guitarDetails.name}</h1>
           <div className="flex mb-4">
@@ -92,7 +109,15 @@ function ProductOverview({ guitarDetails }) {
                 <b>Envío Gratis</b> a <u><b>Argentina</b></u>
               </span>
 
-              <span className="text-green-500"><b>In-Stock</b></span>
+              <span
+                className={`
+                  text-${isOutOfStock ? 'green' : 'red'}-500
+                  font-bold
+                  ${isOutOfStock ? 'italic' : ''}
+                }`}
+              >
+                {isOutOfStock ? 'In-Stock' : 'No-Stock'}
+              </span>
             </div>
           </div>
 

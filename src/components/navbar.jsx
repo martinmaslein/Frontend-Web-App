@@ -1,10 +1,12 @@
-import { Fragment, useState } from 'react'
+import { Fragment, useState, useEffect } from 'react'
 import { Dialog, Popover, Tab, Transition } from '@headlessui/react'
 import { Bars3Icon, MagnifyingGlassIcon, ShoppingBagIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { Link } from 'react-router-dom';
 import SearchComponent from './navbarComps/searchComponent';
 import Logo from './navbarComps/logo';
 import PopoverPanel from './navbarComps/PopoverPanel';
+import ProductList from './navbarComps/ProductList';
+import SearchBar from './navbarComps/SearchBar';
 
 
 
@@ -93,13 +95,28 @@ function classNames(...classes) {
 
 export default function Example() {
   const [open, setOpen] = useState(false)
-
-
   const [showSearch, setShowSearch] = useState(false);
+  const [products, setProducts] = useState([]);
+  const [filteredProducts, setFilteredProducts] = useState([]);
 
   const handleSearchIconClick = () => {
     setShowSearch(true);
   };
+
+  const fetchProducts = async () => {
+    const API_URL = import.meta.env.VITE_REACT_APP_API_URL;
+    const response = await fetch(API_URL + '/products');
+
+    const data = await response.json();
+    const productsData = data.products.data;
+    setProducts(productsData);
+
+  };
+
+  useEffect(() => {
+    fetchProducts();
+  }, []);
+
 
 
   return (
@@ -179,8 +196,8 @@ export default function Example() {
                 </div>
 
                 {/* Search */}
-                <div className="flex lg:ml-6">
-                  <SearchComponent />
+                <div>
+                  <SearchBar />
                 </div>
 
                 {/* Cart */}

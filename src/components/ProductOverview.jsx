@@ -1,27 +1,32 @@
 import React, { useState } from 'react';
 import { useCookies } from 'react-cookie';
-import ProductItem from './ProductItem';
 
 
-function ProducOverview({ guitarDetails }) {
+function ProductOverview({ guitarDetails }) {
 
   const [cookies, setCookie] = useCookies(['cart']);
 
 
   function handleAddToCart() {
-    // Obtén el producto que se va a agregar al carrito
-    console.log(guitarDetails);
-
-    // Obtén la cookie actual del carrito (si existe) o inicializa una nueva lista de productos vacía
     const cartItems = cookies.cart || [];
+    let insertar = false;
 
-    // Agrega el nuevo producto a la lista de productos del carrito
-    cartItems.push(guitarDetails);
-    console.log(cartItems);
-    // Guarda la lista actualizada de productos en la cookie
-    setCookie('cart', cartItems);
+    for (let i = 0; i < cartItems.length; i++) {
+      if (cartItems[i].id == guitarDetails.id) {
+        cartItems[i].quantity = cartItems[i].quantity + 1;
+        console.log(cartItems[i].quantity);
+      } else {
+        insertar = true
+      }
+    }
 
-    ProductItem(guitarDetails);
+    if (cartItems.length == 0 || insertar) {
+      console.log("entreeee");
+      guitarDetails.quantity = 1;
+      cartItems.push(guitarDetails);
+    }
+
+    setCookie('cart', cartItems, {path:'/'});
   }
 
   return (
@@ -88,7 +93,7 @@ function ProducOverview({ guitarDetails }) {
           <div className="flex">
             <span className="title-font font-medium text-2xl text-gray-900">${guitarDetails.price}</span>
             <button
-              onClick={handleAddToCart}
+              onClick={() => handleAddToCart()}
               className="flex ml-auto text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded"
             >
               Añadir al Carrito
@@ -107,4 +112,4 @@ function ProducOverview({ guitarDetails }) {
   );
 }
 
-export default ProducOverview;
+export default ProductOverview;

@@ -18,17 +18,16 @@ function ProductOverview({ guitarDetails }) {
 
   function handleAddToCart() {
     const cartItems = cookies.cart || [];
-    let insertar = false;
+    let inCart = false;
 
-    for (let i = 0; i < cartItems.length; i++) {
+    for (let i=0; i<cartItems.length && !inCart; i++) {
       if (cartItems[i].id == guitarDetails.id) {
         cartItems[i].quantity = cartItems[i].quantity + 1;
-      } else {
-        insertar = true
+        inCart = true;
       }
     }
 
-    if (cartItems.length == 0 || insertar) {
+    if (cartItems.length == 0 || !inCart) {
       guitarDetails.quantity = 1;
       cartItems.push(createProductObject(guitarDetails));
     }

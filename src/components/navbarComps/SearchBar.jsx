@@ -14,24 +14,24 @@ const SearchBar = () => {
 
   const fetchProducts = async () => {
     const API_URL = import.meta.env.VITE_REACT_APP_API_URL;
-    const perPage = 15; // Adjust this value based on your API's pagination settings
     let currentPage = 1;
     let totalPages = 4;
     let allProducts = [];
-      
-    do {
-        console.log(`${API_URL}/products?page=${currentPage}`);
-      const response = await fetch(API_URL+'/products?page='+currentPage);
-      const data = await response.json();
-      const productsData = data.products.data;
-      allProducts = allProducts.concat(productsData);
-      totalPages = data.products.total_pages;
-      currentPage++;
-    } while (currentPage <= totalPages);
-      
-    setProducts(allProducts);
-    console.log(allProducts);
+
+    const fetchAllProducts = async () => {
+      do {
+        const response = await fetch(`${API_URL}/products?page=${currentPage}`);
+        const data = await response.json();
+        const productsData = data.products.data;
+        allProducts = allProducts.concat(productsData);
+        currentPage++;
+      } while (currentPage <= totalPages);
+      setProducts(allProducts);
+    };
+
+    fetchAllProducts();
   };
+
 
   const filterProducts = () => {
     const filtered = products.filter((product) =>

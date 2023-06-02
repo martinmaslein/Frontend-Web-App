@@ -28,7 +28,7 @@ const PopoverPanel = ({ category }) => {
                     {item.name}
                   </Link>
                   <p aria-hidden="true" className="mt-1">
-                    Shop now
+                    Comprar ahora
                   </p>
                 </div>
               ))}

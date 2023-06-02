@@ -85,11 +85,6 @@ const navigation = {
       ],
     },
   ],
-  pages: [
-    { name: 'Company', href: '#' },
-    { name: 'Stores', href: '#' },
-    { name: 'Shop', href: '#' },
-  ],
 }
 
 function classNames(...classes) {

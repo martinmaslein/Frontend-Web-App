@@ -1,11 +1,20 @@
 import React, { useState } from 'react';
 import { useCookies } from 'react-cookie';
 
+function createProductObject(details){
+  let object = {
+    id : details.id,
+    name : details.name,
+    image_link : details.image_link,
+    price : details.price,
+    quantity : details.quantity
+  }
+  return object;
+}
 
 function ProductOverview({ guitarDetails }) {
 
   const [cookies, setCookie] = useCookies(['cart']);
-
 
   function handleAddToCart() {
     const cartItems = cookies.cart || [];
@@ -14,16 +23,14 @@ function ProductOverview({ guitarDetails }) {
     for (let i = 0; i < cartItems.length; i++) {
       if (cartItems[i].id == guitarDetails.id) {
         cartItems[i].quantity = cartItems[i].quantity + 1;
-        console.log(cartItems[i].quantity);
       } else {
         insertar = true
       }
     }
 
     if (cartItems.length == 0 || insertar) {
-      console.log("entreeee");
       guitarDetails.quantity = 1;
-      cartItems.push(guitarDetails);
+      cartItems.push(createProductObject(guitarDetails));
     }
 
     setCookie('cart', cartItems, {path:'/'});

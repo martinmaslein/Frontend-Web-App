@@ -16,6 +16,7 @@ function ProductOverview({ guitarDetails }) {
 
   const [isOutOfStock, setIsOutOfStock] = useState(guitarDetails.hasStock);
   const [cookies, setCookie] = useCookies(['cart']);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     setIsOutOfStock(guitarDetails.hasStock);
@@ -38,7 +39,12 @@ function ProductOverview({ guitarDetails }) {
     }
 
     setCookie('cart', cartItems, { path: '/' });
-  }
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
 
   return (
 
@@ -97,7 +103,7 @@ function ProductOverview({ guitarDetails }) {
               </a>
             </span>
           </div>
-          <p className="leading-relaxed">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam in libero viverra, malesuada mauris ut, cursus mi. Donec libero orci, sollicitudin nec sodales at, luctus iaculis mauris. Integer tempus dolor vitae est imperdiet dignissim. Quisque vehicula ac lacus vitae sollicitudin. Vestibulum sit amet quam vel ante feugiat semper at id erat. </p>
+          <p className="leading-relaxed text-justify">{guitarDetails.description}</p>
 
           <div className="flex mt-6 items-center pb-5 border-b-2 border-gray-100 mb-5">
             <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" className="bi bi-truck" viewBox="0 0 16 16">
@@ -122,6 +128,27 @@ function ProductOverview({ guitarDetails }) {
           </div>
 
           <div className="flex">
+            {isModalOpen && (
+              <div className="fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-50">
+              <div className="bg-white rounded-lg p-6 text-center">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 1024 1024"
+                  className="h-16 w-16 text-green-500 inline-block align-middle"
+                >
+                  <path
+                    fill="currentColor"
+                    d="M512 64a448 448 0 1 1 0 896 448 448 0 0 1 0-896zm-55.808 536.384-99.52-99.584a38.4 38.4 0 1 0-54.336 54.336l126.72 126.72a38.272 38.272 0 0 0 54.336 0l262.4-262.464a38.4 38.4 0 1 0-54.272-54.336L456.192 600.384z"
+                  />
+                </svg>
+                <p className="mt-2">Producto agregado correctamente al carrito.</p>
+                <button onClick={closeModal} className="mt-4 bg-blue-500 text-white px-4 py-2 rounded">
+                  Cerrar
+                </button>
+              </div>
+            </div>
+            
+            )}
             <span className="title-font font-medium text-2xl text-gray-900">${guitarDetails.price}</span>
             <button
               disabled={!isOutOfStock}

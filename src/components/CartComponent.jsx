@@ -1,7 +1,7 @@
 import { useCookies } from 'react-cookie';
 import React from 'react';
 import ProductCart from './ProductCart';
-import {useNavigate} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 export default function CartComponent() {
 
@@ -9,9 +9,19 @@ export default function CartComponent() {
     const cartItems = cookies.cart || [];
     const navigate = useNavigate();
 
-    function reversePage(){
+    function reversePage() {
         navigate(-1);
     }
+
+    // function totalCost(){
+
+    //     let totalCost;
+    //     cartItems.map((item, index) => {
+    //         totalCost += item.quantity * item.price;
+    //     });
+
+    //     setCookie('cart', cartItems, { path: '/' });
+    // }
 
     return (
         <div className="bg-gray-100">
@@ -45,27 +55,22 @@ export default function CartComponent() {
                     </div>
 
                     <div id="summary" className="w-1/4 px-8 py-10">
-                        <h1 className="font-semibold text-2xl border-b pb-8">Order Summary</h1>
-                        <div className="flex justify-between mt-10 mb-5">
-                            <span className="font-semibold text-sm uppercase">Items 3</span>
-                            <span className="font-semibold text-sm">590$</span>
-                        </div>
-                        <div>
-                            <label className="font-medium inline-block mb-3 text-sm uppercase">Shipping</label>
-                            <select className="block p-2 text-gray-600 w-full text-sm">
-                                <option>Standard shipping - $10.00</option>
-                            </select>
-                        </div>
+                        <h1 className="font-semibold text-2xl border-b pb-8">Resumen del pedido</h1>
+
+
                         <div className="py-10">
-                            <input type="text" id="promo" placeholder="Enter your code" className="p-2 text-sm w-full" />
-                        </div>
-                        <button className="bg-red-500 hover:bg-red-600 px-5 py-2 text-sm text-white uppercase">Apply</button>
-                        <div className="border-t mt-8">
                             <div className="flex font-semibold justify-between py-6 text-sm uppercase">
-                                <span>Total cost</span>
+                                <span>Costo total</span>
                                 <span>$600</span>
                             </div>
-                            <button className="bg-indigo-500 font-semibold hover:bg-indigo-600 py-3 text-sm text-white uppercase w-full">Checkout</button>
+                            <input type="text" id="validate" placeholder="Ingrese e-mail de pago" className="p-2 text-sm w-full" />
+                        </div>
+
+
+                        <button className="bg-red-500 hover:bg-red-600 px-5 py-2 text-sm text-white uppercase">Validar e-mail</button>
+                        <div className="border-t mt-8">
+
+                            <button className="bg-indigo-500 font-semibold hover:bg-indigo-600 py-3 text-sm text-white uppercase w-full">Efectuar pago</button>
                         </div>
                     </div>
                 </div>

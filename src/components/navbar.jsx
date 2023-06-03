@@ -117,7 +117,11 @@ export default function Example() {
   }, []);
 
   const [cookies, setCookie] = useCookies(['cart']);
-  const cartItems = cookies.cart;
+  const cartItems = cookies.cart || [];
+
+  function closeNavbar() {
+    setOpen(false);
+  }
 
   return (
     <div className="bg-white">
@@ -141,32 +145,28 @@ export default function Example() {
 
               {/* Logo */}
               <Logo />
-
               {/* Flyout menus */}
               <Popover.Group className="hidden lg:ml-8 lg:block lg:self-stretch">
                 <div className="flex h-full space-x-8">
                   {navigation.categories.map((category) => (
                     <Popover key={category.name} className="flex">
-                      {({ open }) => (
-                        <>
-                          <div className="relative flex">
-                            <Popover.Button
-                              className={classNames(
-                                open
-                                  ? 'border-indigo-600 text-indigo-600'
-                                  : 'border-transparent text-gray-700 hover:text-gray-800',
-                                'relative z-10 -mb-px flex items-center border-b-2 pt-px text-sm font-medium transition-colors duration-200 ease-out'
-                              )}
-                            >
-                              {category.name}
-                            </Popover.Button>
-                          </div>
 
-                          {/* </Popover Panel> */}
-                          <PopoverPanel category={category} />
+                      <div className="relative flex">
+                        <Popover.Button
+                          className={classNames(
+                            open
+                              ? 'border-indigo-600 text-indigo-600'
+                              : 'border-transparent text-gray-700 hover:text-gray-800',
+                            'relative z-10 -mb-px flex items-center border-b-2 pt-px text-sm font-medium transition-colors duration-200 ease-out'
+                          )}
+                          onClick={() => setOpen(true)}
+                        >
+                          {category.name}
+                        </Popover.Button>
+                      </div>
 
-                        </>
-                      )}
+                      {open && <PopoverPanel category={category} closeNavbar={closeNavbar} />}
+
                     </Popover>
                   ))}
                 </div>

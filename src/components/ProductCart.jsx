@@ -6,14 +6,14 @@ function ProductCart({ product }) {
     const [cookies, setCookie] = useCookies(['cart']);
 
     function removeItem() {
-        
+
         const cartItems = cookies.cart;
-        
+
         cartItems.map((item, index) => {
             if (item.id === product.id) {
-              cartItems.splice(index, 1);
+                cartItems.splice(index, 1);
             }
-          });
+        });
 
         setCookie('cart', cartItems, { path: '/' });
     }
@@ -32,7 +32,7 @@ function ProductCart({ product }) {
             <div>
                 <QuantityInput product={product} />
             </div>
-            <span className="text-center font-semibold text-sm">${product.price}</span>
+            <span className="text-center font-semibold text-sm">${product.price * product.quantity}</span>
         </div>
     );
 }

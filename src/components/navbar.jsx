@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import Logo from './navbarComps/logo';
 import PopoverPanel from './navbarComps/PopoverPanel';
 import SearchBar from './navbarComps/SearchBar';
+import { useCookies } from 'react-cookie';
 
 
 
@@ -115,7 +116,8 @@ export default function Example() {
     fetchProducts();
   }, []);
 
-
+  const [cookies, setCookie] = useCookies(['cart']);
+  const cartItems = cookies.cart;
 
   return (
     <div className="bg-white">
@@ -205,7 +207,7 @@ export default function Example() {
                       className="h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
                       aria-hidden="true"
                     />
-                    <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">0</span>
+                    <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">{cartItems.length}</span>
                     <span className="sr-only">items in cart, view bag</span>
                   </Link>
                 </div>

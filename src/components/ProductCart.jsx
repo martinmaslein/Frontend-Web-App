@@ -1,22 +1,40 @@
 import QuantityInput from './QuantityInput';
+import { useCookies } from 'react-cookie';
 
-export default function ProductCard({ product }) {
+function ProductCart({ product }) {
+
+    const [cookies, setCookie] = useCookies(['cart']);
+
+    function removeItem() {
+        
+        const cartItems = cookies.cart;
+        
+        cartItems.map((item, index) => {
+            if (item.id === product.id) {
+              cartItems.splice(index, 1);
+            }
+          });
+
+        setCookie('cart', cartItems, { path: '/' });
+    }
 
     return (
-        <div className="flex items-center hover:bg-gray-100 -mx-8 px-6 py-5">
-            <div className="flex w-3/5">
-                <div className="w-20">
-                    <img className="h-24" src={product.image_link} alt="" />
+        <div className="grid grid-cols-3 items-center hover:bg-gray-100 -mx-8 px-6 py-5">
+            <div className="flex">
+                <div>
+                    <img className="h-32 w-32" src={product.image_link} alt="" />
                 </div>
                 <div className="flex flex-col justify-between ml-4 flex-grow">
-                    <span className="font-bold text-sm">{product.name}</span>
-                    <a href="#" className="font-semibold hover:text-red-500 text-gray-500 text-xs">Remove</a>
+                    <span className="font-bold text-md">{product.name}</span>
+                    <button onClick={() => removeItem()} className="font-semibold hover:text-red-500 text-gray-500 text-xs">Remove</button>
                 </div>
             </div>
             <div>
-                <QuantityInput />
+                <QuantityInput product={product} />
             </div>
-            <span className="text-center w-2/4 font-semibold text-sm">${product.price}</span>
+            <span className="text-center font-semibold text-sm">${product.price}</span>
         </div>
     );
 }
+
+export default ProductCart;

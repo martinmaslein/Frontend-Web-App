@@ -117,7 +117,7 @@ export default function Example() {
   }, []);
 
   const [cookies, setCookie] = useCookies(['cart']);
-  const cartItems = cookies.cart;
+  const cartItems = cookies.cart || [];
 
   return (
     <div className="bg-white">

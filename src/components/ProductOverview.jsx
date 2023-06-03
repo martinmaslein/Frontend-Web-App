@@ -111,7 +111,7 @@ function ProductOverview({ guitarDetails }) {
 
               <span
                 className={`
-                  ${isOutOfStock ? 'text-green' : 'text-red'}-500
+                 ${isOutOfStock ? 'text-green-500' : 'text-red-500'}
                   font-bold
                   ${isOutOfStock ? 'italic' : ''}
                 }`}

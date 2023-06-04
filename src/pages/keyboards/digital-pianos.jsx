@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import CenterContent from "src/layouts/CenterContent.jsx";
 import ProductItem from 'src/components/ProductItem.jsx';
 import Subcategory from "src/components/Subcategory.jsx";
+import Loading from "src/components/Loading.jsx";
 
 
 function DigitalPianos() {
@@ -27,7 +28,9 @@ function DigitalPianos() {
 	return (
 		<CenterContent>
 			{loading ? (
-				<span>Cargando...</span> // Mostrar mensaje de carga mientras se obtienen los datos
+				<div className="flex items-center justify-center h-screen">
+					<Loading />
+				</div>
 			) : (
 				<>
 					<h2 className="text-2xl font-bold mb-4"><Subcategory subcategoryId={13} /></h2>

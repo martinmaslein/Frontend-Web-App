@@ -26,7 +26,9 @@ function BassAccessories() {
 	return (
 		<CenterContent>
 			{loading ? (
-				<span>Cargando...</span> // Mostrar mensaje de carga mientras se obtienen los datos
+				<div className="flex items-center justify-center h-screen">
+					<Loading />
+				</div>
 			) : (
 				<>
 					<h2 className="text-2xl font-bold mb-4"><Subcategory subcategoryId={6} /></h2>

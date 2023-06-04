@@ -1,27 +1,64 @@
 import { useCookies } from 'react-cookie';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import ProductCart from './ProductCart';
 import { useNavigate } from 'react-router-dom';
 
 export default function CartComponent() {
 
-    const [cookies] = useCookies(['cart']);
+    const [cookies, setCookie] = useCookies(['cart']);
     const cartItems = cookies.cart || [];
     const navigate = useNavigate();
+    const [totalCost, setTotalCost] = useState(0);
 
     function reversePage() {
         navigate(-1);
     }
 
-    // function totalCost(){
+    function newTotalCost() {
+        let cost = 0;
+        cartItems.map((item) => {
+            cost += item.quantity * item.price;
+        });
+        setTotalCost(cost);
+    }
 
-    //     let totalCost;
-    //     cartItems.map((item, index) => {
-    //         totalCost += item.quantity * item.price;
-    //     });
+    useEffect(() => {
+        newTotalCost();
+    }, [cartItems]);
 
-    //     setCookie('cart', cartItems, { path: '/' });
-    // }
+    const createOrder = async () => {
+        const email = document.getElementById("email").value;
+        const address = document.getElementById("address").value;
+        const name = document.getElementById("name").value;
+        const orderData = { delivery_address: address, email: email, name: name, details: [] };
+
+        cartItems.map((item, index) => {
+            orderData.details[index] = { quantity: item.quantity, product_id: item.id };
+        });
+
+        sendOrder(orderData);
+    };
+
+    const sendOrder = async (orderData) => {
+        try {
+            const API_URL = import.meta.env.VITE_REACT_APP_API_URL;
+            const response = await fetch(API_URL + '/orders/create', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(orderData),
+            });
+
+            if (response.ok) {
+                console.log('Orden creada correctamente');
+            } else {
+                console.log(response);
+            }
+        } catch (error) {
+            console.log('Error:', error);
+        }
+    };
 
     return (
         <div className="bg-gray-100">
@@ -61,16 +98,35 @@ export default function CartComponent() {
                         <div className="py-10">
                             <div className="flex font-semibold justify-between py-6 text-sm uppercase">
                                 <span>Costo total</span>
-                                <span>$600</span>
+                                <span>${totalCost}</span>
                             </div>
-                            <input type="text" id="validate" placeholder="Ingrese e-mail de pago" className="p-2 text-sm w-full" />
+
+
+                            <div>
+                                <form onSubmit={formik.handleSubmit}>
+                                    <div>
+                                        <label for="email">Email</label>
+                                        <input type="email" name="email" id="email" placeholder="Ingrese e-mail de pago"
+                                            onChange={formik.handleChange} onBlur={formik.handleBlur} value={formik.values.email} />
+                                        {formik.touched.email && formik.errors.email && (
+                                            <span>{formik.errors.email}</span>
+                                        )}
+                                        <button type='submit'>Submit</button>
+                                    </div>
+                                </form>
+                            </div>
+
+
+
+                            {/* <input type="text" id="email" placeholder="Ingrese e-mail de pago" className="p-2 text-sm w-full" /> */}
+
+                            <input type="text" id="address" placeholder="Ingrese domicilio" className="p-2 text-sm w-full mt-6" />
+
+                            <input type="text" id="name" placeholder="Ingrese nombre y apellido" className="p-2 text-sm w-full mt-6" />
                         </div>
 
-
-                        <button className="bg-red-500 hover:bg-red-600 px-5 py-2 text-sm text-white uppercase">Validar e-mail</button>
                         <div className="border-t mt-8">
-
-                            <button className="bg-indigo-500 font-semibold hover:bg-indigo-600 py-3 text-sm text-white uppercase w-full">Efectuar pago</button>
+                            <button onClick={() => createOrder()} className="bg-indigo-500 font-semibold hover:bg-indigo-600 py-3 text-sm text-white uppercase w-full">Efectuar pago</button>
                         </div>
                     </div>
                 </div>

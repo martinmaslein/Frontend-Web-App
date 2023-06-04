@@ -2,6 +2,7 @@ import { useCookies } from 'react-cookie';
 import React, { useState, useEffect } from 'react';
 import ProductCart from './ProductCart';
 import { useNavigate } from 'react-router-dom';
+import EmailValidate from './emailValidate';
 
 export default function CartComponent() {
 
@@ -101,24 +102,7 @@ export default function CartComponent() {
                                 <span>${totalCost}</span>
                             </div>
 
-
-                            <div>
-                                <form onSubmit={formik.handleSubmit}>
-                                    <div>
-                                        <label for="email">Email</label>
-                                        <input type="email" name="email" id="email" placeholder="Ingrese e-mail de pago"
-                                            onChange={formik.handleChange} onBlur={formik.handleBlur} value={formik.values.email} />
-                                        {formik.touched.email && formik.errors.email && (
-                                            <span>{formik.errors.email}</span>
-                                        )}
-                                        <button type='submit'>Submit</button>
-                                    </div>
-                                </form>
-                            </div>
-
-
-
-                            {/* <input type="text" id="email" placeholder="Ingrese e-mail de pago" className="p-2 text-sm w-full" /> */}
+                            <EmailValidate/>
 
                             <input type="text" id="address" placeholder="Ingrese domicilio" className="p-2 text-sm w-full mt-6" />
 

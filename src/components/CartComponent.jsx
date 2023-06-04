@@ -1,8 +1,9 @@
 import { useCookies } from 'react-cookie';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, removeCookie } from 'react';
 import ProductCart from './ProductCart';
 import { useNavigate } from 'react-router-dom';
-import EmailValidate from './emailValidate';
+import { useFormik } from 'formik'
+
 
 export default function CartComponent() {
 
@@ -10,6 +11,21 @@ export default function CartComponent() {
     const cartItems = cookies.cart || [];
     const navigate = useNavigate();
     const [totalCost, setTotalCost] = useState(0);
+    const [address, setAddress] = useState('');
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const closeModal = () => {
+        setIsModalOpen(false);
+    };
+
+    const validateEmail = (email) => {
+        const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
+        return emailRegex.test(email);
+    };
+
+    const isDisabled = !(address.trim().length > 0 && name.trim().length > 0 && validateEmail(email));
 
     function reversePage() {
         navigate(-1);
@@ -53,6 +69,9 @@ export default function CartComponent() {
 
             if (response.ok) {
                 console.log('Orden creada correctamente');
+                cartItems.splice(0, cartItems.length);
+                setIsModalOpen(true);
+                setCookie('cart', cartItems, { path: '/' });
             } else {
                 console.log(response);
             }
@@ -64,6 +83,27 @@ export default function CartComponent() {
     return (
         <div className="bg-gray-100">
             <div className="container mx-auto mt-10">
+                {isModalOpen && (
+                    <div className="fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-50">
+                        <div className="bg-white rounded-lg p-6 text-center">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 1024 1024"
+                                className="h-16 w-16 text-green-500 inline-block align-middle"
+                            >
+                                <path
+                                    fill="currentColor"
+                                    d="M512 64a448 448 0 1 1 0 896 448 448 0 0 1 0-896zm-55.808 536.384-99.52-99.584a38.4 38.4 0 1 0-54.336 54.336l126.72 126.72a38.272 38.272 0 0 0 54.336 0l262.4-262.464a38.4 38.4 0 1 0-54.272-54.336L456.192 600.384z"
+                                />
+                            </svg>
+                            <p className="mt-2">Pedido realizado con exito!</p>
+                            <button onClick={closeModal} className="mt-4 bg-blue-500 text-white px-4 py-2 rounded">
+                                Cerrar
+                            </button>
+                        </div>
+                    </div>
+
+                )}
                 <div className="flex shadow-md my-10">
                     <div className="w-3/4 bg-white px-10 py-10">
                         <div className="flex justify-between border-b pb-8">
@@ -95,22 +135,50 @@ export default function CartComponent() {
                     <div id="summary" className="w-1/4 px-8 py-10">
                         <h1 className="font-semibold text-2xl border-b pb-8">Resumen del pedido</h1>
 
-
                         <div className="py-10">
                             <div className="flex font-semibold justify-between py-6 text-sm uppercase">
                                 <span>Costo total</span>
                                 <span>${totalCost}</span>
                             </div>
 
-                            <EmailValidate/>
+                            <input
+                                type="text"
+                                id="address"
+                                placeholder="Ingrese domicilio"
+                                className="p-2 text-sm w-full mt-6"
+                                value={address}
+                                onChange={(e) => setAddress(e.target.value)}
+                            />
 
-                            <input type="text" id="address" placeholder="Ingrese domicilio" className="p-2 text-sm w-full mt-6" />
+                            <input
+                                type="text"
+                                id="name"
+                                placeholder="Ingrese nombre y apellido"
+                                className="p-2 text-sm w-full mt-6"
+                                value={name}
+                                onChange={(e) => setName(e.target.value)}
+                            />
 
-                            <input type="text" id="name" placeholder="Ingrese nombre y apellido" className="p-2 text-sm w-full mt-6" />
+                            <input
+                                type="email"
+                                id="email"
+                                placeholder="Ingrese e-mail de pago"
+                                className="p-2 text-sm w-full mt-6"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                            />
                         </div>
 
                         <div className="border-t mt-8">
-                            <button onClick={() => createOrder()} className="bg-indigo-500 font-semibold hover:bg-indigo-600 py-3 text-sm text-white uppercase w-full">Efectuar pago</button>
+                            <button
+                                onClick={() => createOrder()}
+                                className="bg-indigo-500 font-semibold hover:bg-indigo-600 py-3 text-sm text-white uppercase w-full"
+                                style={{ opacity: isDisabled ? 0.6 : 1, cursor: isDisabled ? 'not-allowed' : 'pointer' }}
+                                disabled={isDisabled}
+                            >
+                                Efectuar pago
+                            </button>
+
                         </div>
                     </div>
                 </div>

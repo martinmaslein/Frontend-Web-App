@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import ProductOverview from "src/components/ProductOverview.jsx";
+import Loading from "src/components/Loading.jsx";
 
 function ProductDetails() {
   const { id, name } = useParams();
@@ -33,7 +34,9 @@ function ProductDetails() {
           <ProductOverview key={guitarDetails.id} guitarDetails={guitarDetails} />
            </div>
       ) : (
-        <div className="loading">Loading guitar details...</div>
+        <div className="flex items-center justify-center h-screen">
+					<Loading />
+				</div>
       )}
     </section>
   );

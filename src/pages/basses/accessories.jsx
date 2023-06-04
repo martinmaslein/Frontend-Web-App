@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import CenterContent from "src/layouts/CenterContent.jsx";
 import ProductItem from 'src/components/ProductItem.jsx';
 import Subcategory from "src/components/Subcategory.jsx";
+import Loading from "src/components/Loading.jsx";
 
 function BassAccessories() {
 	const [products, setProducts] = useState([]);

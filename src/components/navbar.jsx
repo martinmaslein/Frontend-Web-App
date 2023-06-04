@@ -166,16 +166,6 @@ export default function Example() {
               </Popover.Group>
 
               <div className="ml-auto flex items-center">
-                <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
-                  <Link to="#" className="text-sm font-medium text-gray-700 hover:text-gray-800">
-                    Iniciar Sesión
-                  </Link>
-                  <span className="h-6 w-px bg-gray-200" aria-hidden="true" />
-                  <Link to="#" className="text-sm font-medium text-gray-700 hover:text-gray-800">
-                    Crear Cuenta
-                  </Link>
-                </div>
-
                 <div className="hidden lg:ml-8 lg:flex">
                   <Link to="#" className="flex items-center text-gray-700 hover:text-gray-800">
                     <img

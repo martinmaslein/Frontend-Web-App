@@ -24,3 +24,4 @@ https://ai-alliance-js.vercel.app/
 # Aclariaciones
 
 - Para la implementación del carrito, utilizamos React Cookies, una libreria que nos permite almacenar temporalmente todos los productos que querramos añadir para luego realizar la compra.
+- El usuario no necesita estar registrado en la pagina para realizar una compra, si no que se registra en el sistema en su primer compra con los datos que le solicita el carrito de compras.

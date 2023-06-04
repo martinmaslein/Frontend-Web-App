@@ -1,6 +1,6 @@
-import { Fragment, useState, useEffect } from 'react'
-import { Dialog, Popover, Tab, Transition } from '@headlessui/react'
-import { Bars3Icon, MagnifyingGlassIcon, ShoppingBagIcon, XMarkIcon } from '@heroicons/react/24/outline'
+import { useState, useEffect } from 'react'
+import { Popover } from '@headlessui/react'
+import { Bars3Icon, ShoppingBagIcon } from '@heroicons/react/24/outline'
 import { Link } from 'react-router-dom';
 import Logo from './navbarComps/logo';
 import PopoverPanel from './navbarComps/PopoverPanel';
@@ -17,13 +17,11 @@ const navigation = {
       featured: [
         {
           name: 'Productos Nuevos',
-          href: '/about',
           imageSrc: 'https://static.guitarcenter.com/static/gc/2023/tent-pole/memorial-day/desktop/gc-md-mg-memorial-day-hp-new-arrival02-05-17-23.jpg',
           imageAlt: 'Models sitting back to back, wearing Basic Tee in black and bone.',
         },
         {
           name: '10% Off',
-          href: '/contact',
           imageSrc: 'https://static.guitarcenter.com/static/gc/2023/tent-pole/memorial-day/desktop/gc-md-mg-memorial-day-hp-used-05-17-23.jpg',
           imageAlt: 'Close up of Basic Tee fall bundle with off-white, ochre, olive, and black tees.',
         },
@@ -94,13 +92,8 @@ function classNames(...classes) {
 
 export default function Example() {
   const [open, setOpen] = useState(false)
-  const [showSearch, setShowSearch] = useState(false);
   const [products, setProducts] = useState([]);
-  const [filteredProducts, setFilteredProducts] = useState([]);
 
-  const handleSearchIconClick = () => {
-    setShowSearch(true);
-  };
 
   const fetchProducts = async () => {
     const API_URL = import.meta.env.VITE_REACT_APP_API_URL;
@@ -174,17 +167,17 @@ export default function Example() {
 
               <div className="ml-auto flex items-center">
                 <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
-                  <a href="#" className="text-sm font-medium text-gray-700 hover:text-gray-800">
+                  <Link to="#" className="text-sm font-medium text-gray-700 hover:text-gray-800">
                     Iniciar Sesión
-                  </a>
+                  </Link>
                   <span className="h-6 w-px bg-gray-200" aria-hidden="true" />
-                  <a href="#" className="text-sm font-medium text-gray-700 hover:text-gray-800">
+                  <Link to="#" className="text-sm font-medium text-gray-700 hover:text-gray-800">
                     Crear Cuenta
-                  </a>
+                  </Link>
                 </div>
 
                 <div className="hidden lg:ml-8 lg:flex">
-                  <a href="#" className="flex items-center text-gray-700 hover:text-gray-800">
+                  <Link to="#" className="flex items-center text-gray-700 hover:text-gray-800">
                     <img
                       src="https://flagicons.lipis.dev/flags/4x3/ar.svg"
                       alt=""
@@ -192,7 +185,7 @@ export default function Example() {
                     />
                     <span className="ml-3 block text-sm font-medium">ARG</span>
                     <span className="sr-only">, change currency</span>
-                  </a>
+                  </Link>
                 </div>
 
                 {/* Search */}

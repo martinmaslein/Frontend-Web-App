@@ -1,13 +1,10 @@
 import React from 'react';
-import { Fragment, useState } from 'react'
-import { Dialog, Popover, Tab, Transition } from '@headlessui/react'
-import { Bars3Icon, MagnifyingGlassIcon, ShoppingBagIcon, XMarkIcon } from '@heroicons/react/24/outline'
+import { Popover } from '@headlessui/react'
 import { Link } from 'react-router-dom';
 
 const PopoverPanel = ({ category, closeNavbar }) => {
   return (
     <Popover.Panel className="absolute inset-x-0 top-full text-sm text-gray-500">
-      {/* Presentational element used to render the bottom shadow, if we put the shadow on the actual panel it pokes out the top, so we use this shorter element to hide the top of the shadow */}
       <div className="absolute inset-0 top-1/2 bg-white shadow" aria-hidden="true" />
 
       <div className="relative bg-white z-10">
@@ -46,7 +43,7 @@ const PopoverPanel = ({ category, closeNavbar }) => {
                   >
                     {section.items.map((item) => (
                       <li key={item.name} className="flex">
-                        <Link to={item.href} className="hover:text-gray-800" onClick ={()=>closeNavbar()}>
+                        <Link to={item.href} className="hover:text-gray-800" onClick={() => closeNavbar()}>
                           {item.name}
                         </Link>
                       </li>

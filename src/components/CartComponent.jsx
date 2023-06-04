@@ -1,8 +1,7 @@
 import { useCookies } from 'react-cookie';
-import React, { useState, useEffect, removeCookie } from 'react';
+import React, { useState, useEffect } from 'react';
 import ProductCart from './ProductCart';
 import { useNavigate } from 'react-router-dom';
-import { useFormik } from 'formik'
 
 
 export default function CartComponent() {

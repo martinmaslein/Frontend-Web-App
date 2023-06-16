@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { TwitterTimelineEmbed, TwitterShareButton, TwitterFollowButton, TwitterHashtagButton, TwitterMentionButton, TwitterTweetEmbed, TwitterMomentShare, TwitterDMButton, TwitterVideoEmbed, TwitterOnAirButton } from 'react-twitter-embed';
+import { TwitterTimelineEmbed } from 'react-twitter-embed';
 import Loading from "src/components/Loading.jsx";
 
 function TwitterEmbed() {
@@ -10,7 +10,7 @@ function TwitterEmbed() {
         
         setTimeout(() => {
             setIsLoading(false);
-        }, 3000);
+        }, 2000);
     }, []);
 
     return (

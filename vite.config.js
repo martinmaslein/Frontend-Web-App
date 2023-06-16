@@ -8,5 +8,10 @@ export default defineConfig({
     alias: {
       src: "/src",
     },
+  },
+  build: {
+    commonjsOptions: {
+      transformMixedEsModules: true,
+    }
   }
 })

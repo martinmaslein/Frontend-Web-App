@@ -13,6 +13,17 @@ function TwitterEmbed() {
         }, 2000);
     }, []);
 
+    useEffect(() => {
+        const loadScript = async () => {
+          const scriptModule = await import('scriptjs');
+          const script = scriptModule.default;
+          
+        };
+        
+        loadScript();
+
+      }, []);
+
     return (
         <div className="flex flex-col items-center">
             <h1 className="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">Tus artistas favoritos</h1>

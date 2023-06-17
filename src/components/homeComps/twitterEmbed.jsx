@@ -7,7 +7,7 @@ function TwitterEmbed() {
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        
+
         setTimeout(() => {
             setIsLoading(false);
         }, 2000);
@@ -15,27 +15,26 @@ function TwitterEmbed() {
 
     useEffect(() => {
         const loadScript = async () => {
-          const scriptModule = await import('scriptjs');
-          const script = scriptModule.default;
-          
+            const scriptModule = await import('scriptjs');
+            const script = scriptModule.default;
+
         };
-        
+
         loadScript();
 
-      }, []);
+    }, []);
 
     return (
         <div className="flex flex-col items-center">
-            <h1 className="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">Tus artistas favoritos</h1>
-
+            <h1 className="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">
+                Tus artistas favoritos
+            </h1>
 
             {isLoading ? (
                 <Loading />
             ) : (
-                <div className="flex">
-
-                    <div className="w-1/2 mr-8">
-                        
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
                         <TwitterTimelineEmbed
                             onLoad={function noRefCheck() { }}
                             options={{
@@ -45,11 +44,9 @@ function TwitterEmbed() {
                             screenName="pogopedia"
                             sourceType="profile"
                             tweetLimit={10}
-                        // noHeader="false"
                         />
                     </div>
-                    <div className="w-1/2">
-                        
+                    <div>
                         <TwitterTimelineEmbed
                             onLoad={function noRefCheck() { }}
                             options={{
@@ -59,14 +56,13 @@ function TwitterEmbed() {
                             screenName="crockpics"
                             sourceType="profile"
                             tweetLimit={10}
-                        // noHeader="false"
                         />
                     </div>
                 </div>
             )}
         </div>
-
     );
+
 }
 
 export default TwitterEmbed;

@@ -22,26 +22,98 @@ import Cart from 'src/pages/cart/cart';
 
 const routes = [
   { path: '/', component: Home },
+  
   { path: '/ElectricGuitars', component: ElectricGuitars },
   { path: '/AcousticGuitars', component: AcousticGuitars },
   { path: '/GuitarAccessories', component: GuitarAccessories },
+
   { path: '/ElectricBasses', component: ElectricBasses },
   { path: '/AcousticBasses', component: AcousticBasses },
   { path: '/BassAccessories', component: BassAccessories },
+
   { path: '/GuitarAmps', component: GuitarAmps },
   { path: '/BassAmps', component: BassAmps },
   { path: '/Effects', component: Effects },
+
   { path: '/AcousticDrums', component: AcousticDrums },
   { path: '/ElectronicDrums', component: ElectronicDrums },
   { path: '/DrumAccesories', component: DrumAccesories },
+
   { path: '/DigitalPianos', component: DigitalPianos },
   { path: '/Organs', component: Organs },
   { path: '/Keyboards', component: Keyboards },
+
   { path: '/AudioInterfaces', component: AudioInterfaces },
   { path: '/Microphones', component: Microphones },
   { path: '/StudioMonitors', component: StudioMonitors },
+
   { path: '/Product/:id/:name', component: ProductDetails },
   { path: '/cart', component: Cart },
 ];
+// const routes = [
+//   {
+//     categories: [
+//       {
+//         id: 'Guitars',
+//         name: 'Guitars',
+//         featured: [
+//           { path: '/ElectricGuitars', component: ElectricGuitars },
+//           { path: '/AcousticGuitars', component: AcousticGuitars },
+//           { path: '/GuitarAccessories', component: GuitarAccessories },
+//         ],
+//       },
+//       {
+//         name: 'Basses',
+//         featured: [
+//           { path: '/ElectricBasses', component: ElectricBasses },
+//           { path: '/AcousticBasses', component: AcousticBasses },
+//           { path: '/BassAccessories', component: BassAccessories },
+//         ],
+//       },
+//       {
+//         id: 'Amps',
+//         name: 'Amps',
+//         featured: [
+//           { path: '/GuitarAmps', component: GuitarAmps },
+//           { path: '/BassAmps', component: BassAmps },
+//           { path: '/Effects', component: Effects },
+//         ],
+//       },
+//       {
+//         id: 'Drums',
+//         name: 'Drums',
+//         featured: [
+//           { path: '/AcousticDrums', component: AcousticDrums },
+//           { path: '/ElectronicDrums', component: ElectronicDrums },
+//           { path: '/DrumAccesories', component: DrumAccesories },
+//         ],
+//       },
+//       {
+//         id: 'Keyboards',
+//         name: 'Keyboards',
+//         featured: [
+//           { path: '/DigitalPianos', component: DigitalPianos },
+//           { path: '/Organs', component: Organs },
+//           { path: '/Keyboards', component: Keyboards },
+//         ],
+//       },
+//       {
+//         id: 'Recording',
+//         name: 'Recording',
+//         featured: [
+//           { path: '/AudioInterfaces', component: AudioInterfaces },
+//           { path: '/Microphones', component: Microphones },
+//           { path: '/StudioMonitors', component: StudioMonitors },
+//         ],
+//       },
+//     ],
+//   },
+//   { path: '/', component: Home },
+//   { path: '/Product/:id/:name', component: ProductDetails },
+//   { path: '/cart', component: Cart },
+// ];
+
+
+
 
 export default routes;

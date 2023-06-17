@@ -223,12 +223,12 @@ export default function Example() {
                 <div className="space-y-6 border-t border-gray-200 px-4 py-6">
                   <div className="flow-root">
                     <Link to="#" className="-m-2 block p-2 font-medium text-gray-900">
-                      Sign in
+                      Iniciar Sesión
                     </Link>
                   </div>
                   <div className="flow-root">
                     <Link to="#" className="-m-2 block p-2 font-medium text-gray-900">
-                      Create account
+                      Crear Cuenta
                     </Link>
                   </div>
                 </div>
@@ -236,12 +236,11 @@ export default function Example() {
                 <div className="border-t border-gray-200 px-4 py-6">
                   <Link to="#" className="-m-2 flex items-center p-2">
                     <img
-                      src="https://tailwindui.com/img/flags/flag-canada.svg"
+                      src="https://flagicons.lipis.dev/flags/4x3/ar.svg"
                       alt=""
                       className="block h-auto w-5 flex-shrink-0"
                     />
-                    <span className="ml-3 block text-base font-medium text-gray-900">CAD</span>
-                    <span className="sr-only">, change currency</span>
+                    <span className="ml-3 block text-base font-medium text-gray-900">ARG</span>
                   </Link>
                 </div>
               </Dialog.Panel>

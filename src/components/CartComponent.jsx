@@ -205,7 +205,9 @@ export default function CartComponent() {
                                 <div className="md:w-3/4 bg-white px-10 py-10">
                                     <div className="flex justify-between border-b pb-8">
                                         <h1 className="font-semibold text-2xl">Mi carrito</h1>
-                                        <h2 className="font-semibold text-2xl">{cartItems.length} Productos</h2>
+                                        <h2 className="font-semibold text-2xl">
+                                            {cartItems.length} {cartItems.length === 1 ? 'Producto' : 'Productos'}
+                                        </h2>
                                     </div>
                                     <div className="grid grid-cols-3 mt-10 mb-5">
                                         <h3 className="font-semibold text-gray-600 text-xs uppercase">Producto</h3>

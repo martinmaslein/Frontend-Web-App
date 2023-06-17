@@ -2,9 +2,12 @@ import { useCookies } from 'react-cookie';
 import React, { useState, useEffect } from 'react';
 import ProductCart from './ProductCart';
 import { useNavigate } from 'react-router-dom';
-
+import { useMediaQuery } from 'react-responsive';
 
 export default function CartComponent() {
+
+
+    const isMobile = useMediaQuery({ maxWidth: 767 });
 
     const [cookies, setCookie] = useCookies(['cart']);
     const cartItems = cookies.cart || [];
@@ -80,108 +83,198 @@ export default function CartComponent() {
     };
 
     return (
-        <div className="bg-gray-100">
-            <div className="container mx-auto mt-10">
-                {isModalOpen && (
-                    <div className="fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-50">
-                        <div className="bg-white rounded-lg p-6 text-center">
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 1024 1024"
-                                className="h-16 w-16 text-green-500 inline-block align-middle"
-                            >
-                                <path
-                                    fill="currentColor"
-                                    d="M512 64a448 448 0 1 1 0 896 448 448 0 0 1 0-896zm-55.808 536.384-99.52-99.584a38.4 38.4 0 1 0-54.336 54.336l126.72 126.72a38.272 38.272 0 0 0 54.336 0l262.4-262.464a38.4 38.4 0 1 0-54.272-54.336L456.192 600.384z"
-                                />
-                            </svg>
-                            <p className="mt-2">Pedido realizado con exito!</p>
-                            <button onClick={closeModal} className="mt-4 bg-blue-500 text-white px-4 py-2 rounded">
-                                Cerrar
-                            </button>
-                        </div>
-                    </div>
+        <div>
+            {isMobile ? (
 
-                )}
-                <div className="flex shadow-md my-10">
-                    <div className="w-3/4 bg-white px-10 py-10">
-                        <div className="flex justify-between border-b pb-8">
-                            <h1 className="font-semibold text-2xl">Mi carrito</h1>
-                            <h2 className="font-semibold text-2xl">{cartItems.length} Productos</h2>
-                        </div>
-                        <div className="grid grid-cols-3 mt-10 mb-5">
-                            <h3 className="font-semibold text-gray-600 text-xs uppercase">Producto</h3>
-                            <h3 className="font-semibold text-center text-gray-600 text-xs uppercase">Cantidad</h3>
-                            <h3 className="font-semibold text-center text-gray-600 text-xs uppercase">Precio</h3>
-                        </div>
-
-                        <div>
-                            <ul>
-                                {cartItems.map((item, index) => (
-                                    <ProductCart key={index} product={item} />
-                                ))}
-                            </ul>
-                        </div>
-
-                        <button onClick={() => reversePage()} className="flex font-semibold text-indigo-600 text-sm mt-10">
-                            <svg className="fill-current mr-2 text-indigo-600 w-4" viewBox="0 0 448 512">
-                                <path d="M134.059 296H436c6.627 0 12-5.373 12-12v-56c0-6.627-5.373-12-12-12H134.059v-46.059c0-21.382-25.851-32.09-40.971-16.971L7.029 239.029c-9.373 9.373-9.373 24.569 0 33.941l86.059 86.059c15.119 15.119 40.971 4.411 40.971-16.971V296z" />
-                            </svg>
-                            Continuar comprando
-                        </button>
-                    </div>
-
-                    <div id="summary" className="w-1/4 px-8 py-10">
-                        <h1 className="font-semibold text-2xl border-b pb-8">Resumen del pedido</h1>
-
-                        <div className="py-10">
-                            <div className="flex font-semibold justify-between py-6 text-sm uppercase">
-                                <span>Costo total</span>
-                                <span>${totalCost}</span>
+                <div className="mobile-styles">
+                    <div className="bg-gray-100">
+                        <div className="container mx-auto mt-10">
+                            {isModalOpen && (
+                                <div className="fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-50">
+                                    <div className="bg-white rounded-lg p-6 text-center">
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            viewBox="0 0 1024 1024"
+                                            className="h-16 w-16 text-green-500 inline-block align-middle"
+                                        >
+                                            <path
+                                                fill="currentColor"
+                                                d="M512 64a448 448 0 1 1 0 896 448 448 0 0 1 0-896zm-55.808 536.384-99.52-99.584a38.4 38.4 0 1 0-54.336 54.336l126.72 126.72a38.272 38.272 0 0 0 54.336 0l262.4-262.464a38.4 38.4 0 1 0-54.272-54.336L456.192 600.384z"
+                                            />
+                                        </svg>
+                                        <p className="mt-2">Pedido realizado con éxito!</p>
+                                        <button onClick={closeModal} className="mt-4 bg-blue-500 text-white px-4 py-2 rounded">
+                                            Cerrar
+                                        </button>
+                                    </div>
+                                </div>
+                            )}
+                            <div className="mobile-styles">
+                                <h1 className="font-semibold text-2xl">Mi carrito</h1>
+                                <h2 className="font-semibold text-2xl">{cartItems.length} Productos</h2>
+                                <div className="grid grid-cols-3 mt-10 mb-5">
+                                    <h3 className="font-semibold text-gray-600 text-xs uppercase">Producto</h3>
+                                    <h3 className="font-semibold text-center text-gray-600 text-xs uppercase">Cantidad</h3>
+                                    <h3 className="font-semibold text-center text-gray-600 text-xs uppercase">Precio</h3>
+                                </div>
+                                <ul>
+                                    {cartItems.map((item, index) => (
+                                        <ProductCart key={index} product={item} />
+                                    ))}
+                                </ul>
+                                <button onClick={() => reversePage()} className="flex font-semibold text-indigo-600 text-sm mt-10">
+                                    <svg className="fill-current mr-2 text-indigo-600 w-4" viewBox="0 0 448 512">
+                                        <path d="M134.059 296H436c6.627 0 12-5.373 12-12v-56c0-6.627-5.373-12-12-12H134.059v-46.059c0-21.382-25.851-32.09-40.971-16.971L7.029 239.029c-9.373 9.373-9.373 24.569 0 33.941l86.059 86.059c15.119 15.119 40.971 4.411 40.971-16.971V296z" />
+                                    </svg>
+                                    Continuar comprando
+                                </button>
+                                <div id="summary" className="px-8 py-10">
+                                    <h1 className="font-semibold text-2xl border-b pb-8">Resumen del pedido</h1>
+                                    <div className="py-10">
+                                        <div className="flex font-semibold justify-between py-6 text-sm uppercase">
+                                            <span>Costo total</span>
+                                            <span>${totalCost}</span>
+                                        </div>
+                                        <input
+                                            type="text"
+                                            id="address"
+                                            placeholder="Ingrese domicilio"
+                                            className="p-2 text-sm w-full mt-6"
+                                            value={address}
+                                            onChange={(e) => setAddress(e.target.value)}
+                                        />
+                                        <input
+                                            type="text"
+                                            id="name"
+                                            placeholder="Ingrese nombre y apellido"
+                                            className="p-2 text-sm w-full mt-6"
+                                            value={name}
+                                            onChange={(e) => setName(e.target.value)}
+                                        />
+                                        <input
+                                            type="email"
+                                            id="email"
+                                            placeholder="Ingrese e-mail de pago"
+                                            className="p-2 text-sm w-full mt-6"
+                                            value={email}
+                                            onChange={(e) => setEmail(e.target.value)}
+                                        />
+                                    </div>
+                                    <div className="border-t mt-8">
+                                        <button
+                                            onClick={() => createOrder()}
+                                            className="bg-indigo-500 font-semibold hover:bg-indigo-600 py-3 text-sm text-white uppercase w-full"
+                                            style={{ opacity: isDisabled ? 0.6 : 1, cursor: isDisabled ? 'not-allowed' : 'pointer' }}
+                                            disabled={isDisabled}
+                                        >
+                                            Efectuar pago
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
-
-                            <input
-                                type="text"
-                                id="address"
-                                placeholder="Ingrese domicilio"
-                                className="p-2 text-sm w-full mt-6"
-                                value={address}
-                                onChange={(e) => setAddress(e.target.value)}
-                            />
-
-                            <input
-                                type="text"
-                                id="name"
-                                placeholder="Ingrese nombre y apellido"
-                                className="p-2 text-sm w-full mt-6"
-                                value={name}
-                                onChange={(e) => setName(e.target.value)}
-                            />
-
-                            <input
-                                type="email"
-                                id="email"
-                                placeholder="Ingrese e-mail de pago"
-                                className="p-2 text-sm w-full mt-6"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                            />
                         </div>
+                    </div>
 
-                        <div className="border-t mt-8">
-                            <button
-                                onClick={() => createOrder()}
-                                className="bg-indigo-500 font-semibold hover:bg-indigo-600 py-3 text-sm text-white uppercase w-full"
-                                style={{ opacity: isDisabled ? 0.6 : 1, cursor: isDisabled ? 'not-allowed' : 'pointer' }}
-                                disabled={isDisabled}
-                            >
-                                Efectuar pago
-                            </button>
+                </div>
+            ) : (
 
+                <div className="desktop-styles">
+                    <div className="bg-gray-100">
+                        <div className="container mx-auto mt-10">
+                            {isModalOpen && (
+                                <div className="fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-50">
+                                    <div className="bg-white rounded-lg p-6 text-center">
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            viewBox="0 0 1024 1024"
+                                            className="h-16 w-16 text-green-500 inline-block align-middle"
+                                        >
+                                            <path
+                                                fill="currentColor"
+                                                d="M512 64a448 448 0 1 1 0 896 448 448 0 0 1 0-896zm-55.808 536.384-99.52-99.584a38.4 38.4 0 1 0-54.336 54.336l126.72 126.72a38.272 38.272 0 0 0 54.336 0l262.4-262.464a38.4 38.4 0 1 0-54.272-54.336L456.192 600.384z"
+                                            />
+                                        </svg>
+                                        <p className="mt-2">Pedido realizado con exito!</p>
+                                        <button onClick={closeModal} className="mt-4 bg-blue-500 text-white px-4 py-2 rounded">
+                                            Cerrar
+                                        </button>
+                                    </div>
+                                </div>
+                            )}
+                            <div className="flex flex-col md:flex-row shadow-md my-10">
+                                <div className="md:w-3/4 bg-white px-10 py-10">
+                                    <div className="flex justify-between border-b pb-8">
+                                        <h1 className="font-semibold text-2xl">Mi carrito</h1>
+                                        <h2 className="font-semibold text-2xl">{cartItems.length} Productos</h2>
+                                    </div>
+                                    <div className="grid grid-cols-3 mt-10 mb-5">
+                                        <h3 className="font-semibold text-gray-600 text-xs uppercase">Producto</h3>
+                                        <h3 className="font-semibold text-center text-gray-600 text-xs uppercase">Cantidad</h3>
+                                        <h3 className="font-semibold text-center text-gray-600 text-xs uppercase">Precio</h3>
+                                    </div>
+                                    <div>
+                                        <ul>
+                                            {cartItems.map((item, index) => (
+                                                <ProductCart key={index} product={item} />
+                                            ))}
+                                        </ul>
+                                    </div>
+                                    <button onClick={() => reversePage()} className="flex font-semibold text-indigo-600 text-sm mt-10">
+                                        <svg className="fill-current mr-2 text-indigo-600 w-4" viewBox="0 0 448 512">
+                                            <path d="M134.059 296H436c6.627 0 12-5.373 12-12v-56c0-6.627-5.373-12-12-12H134.059v-46.059c0-21.382-25.851-32.09-40.971-16.971L7.029 239.029c-9.373 9.373-9.373 24.569 0 33.941l86.059 86.059c15.119 15.119 40.971 4.411 40.971-16.971V296z" />
+                                        </svg>
+                                        Continuar comprando
+                                    </button>
+                                </div>
+                                <div id="summary" className="md:w-1/4 px-8 py-10">
+                                    <h1 className="font-semibold text-2xl border-b pb-8">Resumen del pedido</h1>
+                                    <div className="py-10">
+                                        <div className="flex font-semibold justify-between py-6 text-sm uppercase">
+                                            <span>Costo total</span>
+                                            <span>${totalCost}</span>
+                                        </div>
+                                        <input
+                                            type="text"
+                                            id="address"
+                                            placeholder="Ingrese domicilio"
+                                            className="p-2 text-sm w-full mt-6"
+                                            value={address}
+                                            onChange={(e) => setAddress(e.target.value)}
+                                        />
+                                        <input
+                                            type="text"
+                                            id="name"
+                                            placeholder="Ingrese nombre y apellido"
+                                            className="p-2 text-sm w-full mt-6"
+                                            value={name}
+                                            onChange={(e) => setName(e.target.value)}
+                                        />
+                                        <input
+                                            type="email"
+                                            id="email"
+                                            placeholder="Ingrese e-mail de pago"
+                                            className="p-2 text-sm w-full mt-6"
+                                            value={email}
+                                            onChange={(e) => setEmail(e.target.value)}
+                                        />
+                                    </div>
+                                    <div className="border-t mt-8">
+                                        <button
+                                            onClick={() => createOrder()}
+                                            className="bg-indigo-500 font-semibold hover:bg-indigo-600 py-3 text-sm text-white uppercase w-full"
+                                            style={{ opacity: isDisabled ? 0.6 : 1, cursor: isDisabled ? 'not-allowed' : 'pointer' }}
+                                            disabled={isDisabled}
+                                        >
+                                            Efectuar pago
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            )}
         </div>
-    )
+    );
+
 }

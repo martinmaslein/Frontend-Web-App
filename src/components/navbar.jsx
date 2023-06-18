@@ -1,6 +1,6 @@
 import { Fragment, useState, useEffect } from 'react'
 import { Popover } from '@headlessui/react'
-import { Bars3Icon, MagnifyingGlassIcon, ShoppingBagIcon, XMarkIcon } from '@heroicons/react/24/outline'
+import { Bars3Icon, ShoppingBagIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { Dialog, Tab, Transition } from '@headlessui/react';
 import { Link } from 'react-router-dom';
 import Logo from './navbarComps/logo';

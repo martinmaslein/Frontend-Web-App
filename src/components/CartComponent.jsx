@@ -3,6 +3,8 @@ import React, { useState, useEffect } from 'react';
 import ProductCart from './ProductCart';
 import { useNavigate } from 'react-router-dom';
 import { useMediaQuery } from 'react-responsive';
+import BrickComponent from './BrickComponent';
+import Modal from 'react-modal';
 
 export default function CartComponent() {
 
@@ -17,6 +19,16 @@ export default function CartComponent() {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [isModalOpen, setIsModalOpen] = useState(false);
+
+    // Modal MP
+    const [showModal, setShowModal] = useState(false);
+    const handleOpenModal = () => {
+        setShowModal(true);
+    };
+    const handleCloseModal = () => {
+        setShowModal(false);
+    };
+
 
     const closeModal = () => {
         setIsModalOpen(false);
@@ -46,6 +58,7 @@ export default function CartComponent() {
     }, [cartItems]);
 
     const createOrder = async () => {
+
         const email = document.getElementById("email").value;
         const address = document.getElementById("address").value;
         const name = document.getElementById("name").value;
@@ -262,13 +275,46 @@ export default function CartComponent() {
                                     </div>
                                     <div className="border-t mt-8">
                                         <button
-                                            onClick={() => createOrder()}
+                                            onClick={handleOpenModal}
                                             className="bg-indigo-500 font-semibold hover:bg-indigo-600 py-3 text-sm text-white uppercase w-full"
                                             style={{ opacity: isDisabled ? 0.6 : 1, cursor: isDisabled ? 'not-allowed' : 'pointer' }}
                                             disabled={isDisabled}
                                         >
                                             Efectuar pago
                                         </button>
+                                        <Modal
+                                            isOpen={showModal}
+                                            onRequestClose={handleCloseModal}
+                                            className="flex items-center justify-center mx-auto"
+                                            overlayClassName="fixed inset-0 bg-gray-500 bg-opacity-75"
+                                            ariaHideApp={false}
+                                            shouldCloseOnOverlayClick={true}
+                                        >
+                                            <div className="relative bg-white p-4 rounded-lg max-w-[500px] m-4">
+                                                <button
+                                                    className="absolute top-2 right-2 text-gray-500 hover:text-gray-800"
+                                                    onClick={handleCloseModal}
+                                                >
+                                                    <svg
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                        className="h-6 w-6"
+                                                        fill="none"
+                                                        viewBox="0 0 24 24"
+                                                        stroke="currentColor"
+                                                    >
+                                                        <path
+                                                            strokeLinecap="round"
+                                                            strokeLinejoin="round"
+                                                            strokeWidth={2}
+                                                            d="M6 18L18 6M6 6l12 12"
+                                                        />
+                                                    </svg>
+                                                </button>
+                                                <div className="max-h-[580px] overflow-y-auto">
+                                                    <BrickComponent />
+                                                </div>
+                                            </div>
+                                        </Modal>
                                     </div>
                                 </div>
                             </div>

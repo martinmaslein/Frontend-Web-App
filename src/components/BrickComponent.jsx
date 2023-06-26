@@ -4,18 +4,32 @@ import BrickLayout from "../layouts/BrickLayout";
 import Loading from "./Loading";
 import CenterContent from "src/layouts/CenterContent";
 
-function BrickComponent() {
+function BrickComponent({ price }) {
 
-  const API_URL = "a";
-  const MP_URL = import.meta.env.VITE_REAT_APP_PUBLIC_KEY;
+  const API_URL = import.meta.env.VITE_REACT_APP_API_URL;
 
   const [loading, setLoading] = useState(true);
   const [shown, setShown] = useState(false);
 
 
   const initialization = {
-    amount: 100,
+    amount: price,
+    // payer: {
+    //   email: user.email,   --> Aca habria que poner el mail con el que inicio sesion
+    // }, 
   };
+
+  // const customization = {
+  //   visual: {
+  //     style: {
+  //       customVariables: {           --> Ver si queremos cambiar el color del boton
+  //         textPrimaryColor: 'string',
+  //         textSecondaryColor: 'string'
+  //       }
+  //     }
+  //   }
+  // };
+
 
   const onSubmit = async (formData) => {
     const token = await getAccessTokenSilently();
@@ -63,29 +77,33 @@ function BrickComponent() {
   const TITULO = "Pago";
   const CONTENT = (
     <>
-      {loading &&
-        <CenterContent>
-          <Loading />
-        </CenterContent >
-      }
-
-      <div className={shown ? "block space-y-2" : "hidden"}>
+      <div>
         <p className="text-md font-bold">Mercado Pago</p>
         <p className="font-thin italic pb-2">
           Tus datos están seguros dentro de esta ventana ✔️
         </p>
-        <CardPayment
-          initialization={initialization}
-          onSubmit={onSubmit}
-          onReady={onReady}
-          onError={onError}
-        />
+
+        {loading &&
+          <div className="block space-y-2">
+            <CenterContent>
+              <Loading />
+            </CenterContent >
+          </div>
+        }
+
+        <div className={shown ? "block space-y-2" : "hidden"}>
+
+          <CardPayment
+            initialization={initialization}
+            customization={customization}
+            onSubmit={onSubmit}
+            onReady={onReady}
+            onError={onError}
+          />
+        </div>
       </div>
     </>
   );
-
-
-
 
   return (
 

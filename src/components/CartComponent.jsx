@@ -311,7 +311,9 @@ export default function CartComponent() {
                                                     </svg>
                                                 </button>
                                                 <div className="max-h-[580px] overflow-y-auto">
-                                                    <BrickComponent />
+                                                    <BrickComponent 
+                                                        price={totalCost}
+                                                    />
                                                 </div>
                                             </div>
                                         </Modal>

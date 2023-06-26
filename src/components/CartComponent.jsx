@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import ProductCart from './ProductCart';
 import { useNavigate } from 'react-router-dom';
 import { useMediaQuery } from 'react-responsive';
-import BrickComponent from './BrickComponent';
+import Payment from './mercadoPagoComps/Payment';
 import Modal from 'react-modal';
 
 export default function CartComponent() {
@@ -311,7 +311,7 @@ export default function CartComponent() {
                                                     </svg>
                                                 </button>
                                                 <div className="max-h-[580px] overflow-y-auto">
-                                                    <BrickComponent 
+                                                    <Payment 
                                                         price={totalCost}
                                                     />
                                                 </div>

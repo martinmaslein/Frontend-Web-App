@@ -1,10 +1,10 @@
 import React, { useContext, useState } from "react";
 import { initMercadoPago, CardPayment } from "@mercadopago/sdk-react";
-import BrickLayout from "../layouts/BrickLayout";
-import Loading from "./Loading";
+import PaymentLayout from "../../layouts/PaymentLayout";
+import Loading from "../Loading";
 import CenterContent from "src/layouts/CenterContent";
 
-function BrickComponent({ price }) {
+function Payment({ price }) {
 
   const API_URL = import.meta.env.VITE_REACT_APP_API_URL;
 
@@ -107,7 +107,7 @@ function BrickComponent({ price }) {
 
   return (
 
-    <BrickLayout
+    <PaymentLayout
       title={TITULO}
       content={CONTENT}
     />
@@ -115,4 +115,4 @@ function BrickComponent({ price }) {
   );
 }
 
-export default BrickComponent;
+export default Payment;

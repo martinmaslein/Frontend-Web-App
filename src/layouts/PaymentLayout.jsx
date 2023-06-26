@@ -1,4 +1,4 @@
-function BrickLayout({ title, content }) {
+function PaymentLayout({ title, content }) {
     return (
       <div className="flex flex-col space-y-4 max-w-md mx-auto">
         <p className="text-2xl font-bold">{title}</p>
@@ -7,5 +7,5 @@ function BrickLayout({ title, content }) {
     );
   }
   
-  export default BrickLayout;
+  export default PaymentLayout;
   

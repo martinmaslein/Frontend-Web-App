@@ -95,7 +95,7 @@ function BrickComponent({ price }) {
 
           <CardPayment
             initialization={initialization}
-            customization={customization}
+            // customization={customization}
             onSubmit={onSubmit}
             onReady={onReady}
             onError={onError}

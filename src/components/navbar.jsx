@@ -1,4 +1,4 @@
-import { Fragment, useState, useEffect } from 'react'
+import { Fragment, useState, useEffect, useContext } from 'react'
 import { Popover } from '@headlessui/react'
 import { Bars3Icon, ShoppingBagIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { Dialog, Tab, Transition } from '@headlessui/react';
@@ -7,7 +7,11 @@ import Logo from './navbarComps/logo';
 import PopoverPanel from './navbarComps/PopoverPanel';
 import SearchBar from './navbarComps/SearchBar';
 import { useCookies } from 'react-cookie';
+import { Cookies } from 'react-cookie';
 import { useMediaQuery } from 'react-responsive';
+import axios from 'axios';
+import AuthContext from "../contexts/authContext";
+import { useAuth } from "../hooks/useAuth";
 
 
 const navigation = {
@@ -97,7 +101,6 @@ export default function Example() {
   const [open, setOpen] = useState(false)
   const [products, setProducts] = useState([]);
 
-
   const fetchProducts = async () => {
     const API_URL = import.meta.env.VITE_REACT_APP_API_URL;
     const response = await fetch(API_URL + '/products');
@@ -107,6 +110,88 @@ export default function Example() {
     setProducts(productsData);
 
   };
+
+  const cookie = new Cookies();
+  const [authToken, setAuthToken] = useState(null);
+  const [user, setUser] = useState(null);
+  const { authData, setAuthData } = useContext(AuthContext);
+  const { setLogout } = useAuth();
+  const [isLoading, setIsLoading] = useState(true);
+
+
+  useEffect(() => {
+    let token = cookie.get("auth_token");
+    setAuthToken(token);
+    axios.get('http://127.0.0.1:8000/rest/user', {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }).then(response => {
+      setUser(response.data.user);
+      setIsLoading(false);
+    });
+  }, []);
+
+  const renderLinks = () => {
+    if (!authData.signedIn && authToken === undefined) {
+      return (
+        <>
+          <li className="nav-item">
+            <Link className="nav-link" to="/login">Login</Link>
+          </li>
+          <li className="nav-item">
+            <Link className="nav-link" to="/register">Register</Link>
+          </li>
+        </>
+      );
+    }
+
+    if (!isLoading) {
+      return (
+        <>
+          {user && (
+            <ul className="navbar-nav">
+              <li className="nav-item">
+                <span className="nav-link text-gray-800">Hola, {user.name}</span>
+              </li>
+            </ul>
+          )}
+
+          <ul className="navbar-nav">
+            <li className="nav-item">
+              <a
+                className="nav-link text-gray-800 cursor-pointer"
+                href="#"
+                onClick={handleLogout}
+              >
+                Cerrar sesión
+              </a>
+            </li>
+          </ul>
+        </>
+
+      );
+    }
+  }
+
+  const handleLogout = () => {
+    var myHeaders = new Headers();
+    myHeaders.append("Authorization", "Bearer 29|AdzsK4OVAOo0hWxRDZ0lRgQxYdR6A7hrWIYK1BIK");
+
+    var requestOptions = {
+      method: 'POST',
+      headers: myHeaders,
+      redirect: 'follow'
+    };
+
+    fetch("http://127.0.0.1:8000/rest/logout", requestOptions)
+      .then(() => {
+        console.log("fermin");
+        setLogout();
+      }).catch(err => {
+        console.log(err);
+      });
+  }
 
   useEffect(() => {
     fetchProducts();
@@ -121,7 +206,6 @@ export default function Example() {
 
   return (
     <div className="bg-white">
-
 
       <header className="relative bg-white">
         <p className="flex h-10 items-center justify-center bg-red-500 px-4 text-sm font-medium text-white sm:px-6 lg:px-8">
@@ -324,7 +408,9 @@ export default function Example() {
                   </Popover.Group>
 
                   <div className="ml-auto flex items-center">
+
                     <div className="hidden lg:ml-8 lg:flex">
+
                       <Link to="#" className="flex items-center text-gray-700 hover:text-gray-800">
                         <img
                           src="https://flagicons.lipis.dev/flags/4x3/ar.svg"
@@ -340,6 +426,8 @@ export default function Example() {
                     <div>
                       <SearchBar />
                     </div>
+
+                    <div>{renderLinks()}</div>
 
                     {/* Cart */}
                     <div className="ml-4 flow-root lg:ml-6">
@@ -359,7 +447,6 @@ export default function Example() {
           </div>
         </nav>
       </header>
-
     </div>
   )
 }

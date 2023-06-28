@@ -5,12 +5,18 @@ import Footer from './components/Footer';
 import './index.css';
 import { CookiesProvider } from 'react-cookie';
 import routes from './components/routes';
+import AuthContext from "./contexts/authContext";
+import { useAuth } from "./hooks/useAuth";
+import { useState, useContext } from "react";
 
-class App extends Component {
-  render() {
-    return (
+function App() {
+  const { userData } = useAuth();
+  const [authData, setAuthData] = useState({ signedIn: userData.signedIn, user: userData.user });
+
+  return (
+    <AuthContext.Provider value={{ authData, setAuthData }}>
       <CookiesProvider>
-        <Router>
+
           <div className="App" style={{ display: 'flex', flexDirection: 'column', minHeight: '150vh' }}>
             <Navbar />
 
@@ -24,10 +30,10 @@ class App extends Component {
 
             <Footer />
           </div>
-        </Router>
+
       </CookiesProvider>
-    );
-  }
+    </AuthContext.Provider>
+  );
 }
 
 export default App;

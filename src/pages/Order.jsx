@@ -3,7 +3,7 @@ export default function Order({ order }) {
     const [products, setProducts] = useState([]);
 
     const getProductDetails = async (product_id) => {
-        axios.get(apiUrl + '/products/' + product_id, {
+        axios.get(apiUrl + 'products/' + product_id, {
         }).then(response => {
             setProducts((products) => products.push(response.data.product));
         });

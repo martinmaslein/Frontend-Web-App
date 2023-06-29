@@ -100,7 +100,7 @@ export default function Example() {
   const isMobile = useMediaQuery({ maxWidth: 767 });
   const [open, setOpen] = useState(false)
   const [products, setProducts] = useState([]);
-  
+
 
   const fetchProducts = async () => {
     const response = await fetch(apiUrl + 'products');
@@ -150,10 +150,13 @@ export default function Example() {
     return (
       <div className="flex items-center">
         {userData.user && (
-          <ul className="flex items-center">
+          <ul className="list-none flex">
             <li className="mr-4">
               <span className="text-gray-500">Hola,</span>{" "}
               <span className="font-bold">{userData.user.name}</span>
+            </li>
+            <li className="nav-item px-4">
+              <Link className="text-gray-800 px-4 py-2 rounded bg-red-500 hover:bg-red-600 text-white cursor-pointer" to="/myOrders">Mis órdenes</Link>
             </li>
           </ul>
         )}

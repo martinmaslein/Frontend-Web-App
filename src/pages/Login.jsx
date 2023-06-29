@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useAuth } from '../hooks/useAuth';
 import { useForm } from "../hooks/useForm";
 import axios from 'axios';
-import { constantes } from "../components/pages/utils";
+import { apiUrl } from "../utils/constantes";
 
 export default function Login() {
 
@@ -10,7 +10,6 @@ export default function Login() {
   const [password, setPassword] = useState('');
   const { setAsLogged } = useAuth();
   const { setErrors, setMessage } = useForm();
-  const apiUrl = constantes.REACT_APP_API_URL;
 
   const makeRequest = (e) => {
     e.preventDefault();

@@ -11,7 +11,7 @@ import { Cookies } from 'react-cookie';
 import { useMediaQuery } from 'react-responsive';
 import axios from 'axios';
 import { useAuth } from "../hooks/useAuth";
-import { constantes } from "../components/pages/utils";
+import { apiUrl } from "../utils/constantes";
 
 
 const navigation = {
@@ -100,7 +100,6 @@ export default function Example() {
   const isMobile = useMediaQuery({ maxWidth: 767 });
   const [open, setOpen] = useState(false)
   const [products, setProducts] = useState([]);
-  const apiUrl = constantes.REACT_APP_API_URL;
   
 
   const fetchProducts = async () => {

@@ -2,7 +2,7 @@ import React, { createContext, useContext, useEffect } from 'react';
 import { Cookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { constantes } from "../components/pages/utils";
+import { apiUrl } from "../utils/constantes";
 
 const AuthContext = createContext({
     user: null,
@@ -11,8 +11,6 @@ const AuthContext = createContext({
     setToken: () => { },
     handleLogout: () => { }
 });
-
-const apiUrl = constantes.REACT_APP_API_URL;
 
 export const AuthProvider = ({ children }) => {
     const [userData, setUserdata] = React.useState({ signedIn: false, user: null });

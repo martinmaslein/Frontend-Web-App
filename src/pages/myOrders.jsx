@@ -2,12 +2,11 @@ import Order from "./order";
 import { Cookies } from 'react-cookie';
 import { useState, useEffect } from 'react'
 import axios from "axios";
-import { constantes } from "../components/pages/utils";
+import { apiUrl } from "../utils/constantes";
 
 export default function MyOrders() {
 
     const [orders, setOrders] = useState([]);
-    const apiUrl = constantes.REACT_APP_API_URL;
 
     const fetchOrders = async () => {
         const cookie = new Cookies();

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { useForm } from "../hooks/useForm";
 import axios from 'axios';
-import { constantes } from "../components/pages/utils";
+import { apiUrl } from "../utils/constantes";
 
 export default function Register() {
   const [nameError] = useState('');
@@ -13,7 +13,6 @@ export default function Register() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { setErrors, navigate } = useForm();
-  const apiUrl = constantes.REACT_APP_API_URL;
 
   const makeRequest = (e) => {
     

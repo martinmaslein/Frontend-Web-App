@@ -15,7 +15,7 @@ export default function Login() {
     e.preventDefault();
     setErrors(null);
     setMessage('');
-    axios.get(apiUrl + 'sanctum/csrf-cookie').then(() => {
+    axios.get('http://127.0.0.1:8000/sanctum/csrf-cookie').then(() => {
       const payload = {
         email,
         password

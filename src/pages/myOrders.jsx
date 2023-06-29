@@ -1,4 +1,4 @@
-import Order from "src/pages/order";
+import Order from "src/pages/Order";
 import { Cookies } from 'react-cookie';
 import { useState, useEffect } from 'react'
 import axios from "axios";

@@ -5,6 +5,10 @@ import { useNavigate } from 'react-router-dom';
 import { useMediaQuery } from 'react-responsive';
 import Payment from './mercadoPagoComps/Payment';
 import Modal from 'react-modal';
+import { Cookies } from 'react-cookie';
+import axios from 'axios';
+import AuthContext from "src/contexts/authContext";
+import { useAuth } from "src/hooks/useAuth";
 
 export default function CartComponent() {
 
@@ -19,6 +23,28 @@ export default function CartComponent() {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [isModalOpen, setIsModalOpen] = useState(false);
+
+    //
+    const cookie = new Cookies();
+    const [authToken, setAuthToken] = useState(null);
+    const [user, setUser] = useState(null);
+  
+    useEffect(() => {
+      console.log("Entre1");
+      let token = cookie.get("auth_token");
+      setAuthToken(token);
+      axios.get('http://127.0.0.1:8000/rest/user', {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }).then(response => {
+        console.log("Entre2");
+        setUser(response.data.user);
+      })
+        .catch(error => {
+          console.error("Error en la solicitud:", error);
+        });
+    }, []);
 
     // Modal MP
     const [showModal, setShowModal] = useState(false);
@@ -248,37 +274,12 @@ export default function CartComponent() {
                                             <span>Costo total</span>
                                             <span>${totalCost}</span>
                                         </div>
-                                        <input
-                                            type="text"
-                                            id="address"
-                                            placeholder="Ingrese domicilio"
-                                            className="p-2 text-sm w-full mt-6"
-                                            value={address}
-                                            onChange={(e) => setAddress(e.target.value)}
-                                        />
-                                        <input
-                                            type="text"
-                                            id="name"
-                                            placeholder="Ingrese nombre y apellido"
-                                            className="p-2 text-sm w-full mt-6"
-                                            value={name}
-                                            onChange={(e) => setName(e.target.value)}
-                                        />
-                                        <input
-                                            type="email"
-                                            id="email"
-                                            placeholder="Ingrese e-mail de pago"
-                                            className="p-2 text-sm w-full mt-6"
-                                            value={email}
-                                            onChange={(e) => setEmail(e.target.value)}
-                                        />
+
                                     </div>
                                     <div className="border-t mt-8">
                                         <button
                                             onClick={handleOpenModal}
                                             className="bg-indigo-500 font-semibold hover:bg-indigo-600 py-3 text-sm text-white uppercase w-full"
-                                            style={{ opacity: isDisabled ? 0.6 : 1, cursor: isDisabled ? 'not-allowed' : 'pointer' }}
-                                            disabled={isDisabled}
                                         >
                                             Efectuar pago
                                         </button>
@@ -313,6 +314,7 @@ export default function CartComponent() {
                                                 <div className="max-h-[580px] overflow-y-auto">
                                                     <Payment 
                                                         price={totalCost}
+                                                        user={user}
                                                     />
                                                 </div>
                                             </div>

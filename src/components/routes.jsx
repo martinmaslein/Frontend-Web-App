@@ -21,6 +21,8 @@ import ProductDetails from 'src/pages/product';
 import Cart from 'src/pages/cart/cart';
 import Register from 'src/pages/Register';
 import Login from 'src/pages/Login';
+import MyOrders from '../pages/myOrders';
+
 
 
 const routes = [
@@ -53,8 +55,10 @@ const routes = [
   { path: '/Product/:id/:name', component: ProductDetails },
   { path: '/cart', component: Cart },
   { path: '/Register', component: Register },
-  { path: '/Login', component: Login}
+  { path: '/Login', component: Login},
+  { path: '/myOrders', component: MyOrders}
 ];
+
 
 
 

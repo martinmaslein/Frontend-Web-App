@@ -5,6 +5,7 @@ import Loading from "../Loading";
 import CenterContent from "src/layouts/CenterContent";
 import { Cookies } from 'react-cookie';
 import Status from 'src/components/mercadoPagoComps/Status';
+import { apiUrl } from "src/utils/constantes";
 
 
 
@@ -12,7 +13,7 @@ function Payment({ price, user }) {
 
   const API_URL = import.meta.env.VITE_REACT_APP_API_URL;
   const PUBLIC_KEY = import.meta.env.VITE_REAT_APP_PUBLIC_KEY;
-  initMercadoPago(PUBLIC_KEY, {
+  initMercadoPago("TEST-9bb71dcc-9e11-4fed-ae79-1c3249f396e1", {
     locale: "es-AR",
   });
 
@@ -39,7 +40,7 @@ function Payment({ price, user }) {
   const onSubmit = async (formData) => {
     let token = cookie.get("auth_token");
     return new Promise((resolve, reject) => {
-      fetch("http://127.0.0.1:8000/rest/comprar/auth", {
+      fetch(apiUrl + "comprar/auth", {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -52,6 +53,7 @@ function Payment({ price, user }) {
           return response.json();
         })
         .then((response) => {
+          console.log(response);
           setId(response.id);
           handleNextStep();
           resolve();
@@ -109,7 +111,6 @@ function Payment({ price, user }) {
     <div>
       {step === 1 && (
         <div>
-          <h2>Paso 1</h2>
           <PaymentLayout
             title={TITULO}
             content={CONTENT}

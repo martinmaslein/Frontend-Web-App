@@ -1,4 +1,4 @@
-import { getProductDetails } from 'tu_archivo_de_utilidades';
+// import { getProductDetails } from 'tu_archivo_de_utilidades';
 
 export default function Order({ order }) {
     return (

@@ -9,6 +9,7 @@ import { Cookies } from 'react-cookie';
 import axios from 'axios';
 import AuthContext from "src/contexts/authContext";
 import { useAuth } from "src/hooks/useAuth";
+import { apiUrl } from "../utils/constantes";
 
 export default function CartComponent() {
 
@@ -28,22 +29,20 @@ export default function CartComponent() {
     const cookie = new Cookies();
     const [authToken, setAuthToken] = useState(null);
     const [user, setUser] = useState(null);
-  
+
     useEffect(() => {
-      console.log("Entre1");
-      let token = cookie.get("auth_token");
-      setAuthToken(token);
-      axios.get('http://127.0.0.1:8000/rest/user', {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      }).then(response => {
-        console.log("Entre2");
-        setUser(response.data.user);
-      })
-        .catch(error => {
-          console.error("Error en la solicitud:", error);
-        });
+        let token = cookie.get("auth_token");
+        setAuthToken(token);
+        axios.get(apiUrl + 'user', {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }).then(response => {
+            setUser(response.data.user);
+        })
+            .catch(error => {
+                console.error("Error en la solicitud:", error);
+            });
     }, []);
 
     // Modal MP
@@ -174,40 +173,50 @@ export default function CartComponent() {
                                             <span>Costo total</span>
                                             <span>${totalCost}</span>
                                         </div>
-                                        <input
-                                            type="text"
-                                            id="address"
-                                            placeholder="Ingrese domicilio"
-                                            className="p-2 text-sm w-full mt-6"
-                                            value={address}
-                                            onChange={(e) => setAddress(e.target.value)}
-                                        />
-                                        <input
-                                            type="text"
-                                            id="name"
-                                            placeholder="Ingrese nombre y apellido"
-                                            className="p-2 text-sm w-full mt-6"
-                                            value={name}
-                                            onChange={(e) => setName(e.target.value)}
-                                        />
-                                        <input
-                                            type="email"
-                                            id="email"
-                                            placeholder="Ingrese e-mail de pago"
-                                            className="p-2 text-sm w-full mt-6"
-                                            value={email}
-                                            onChange={(e) => setEmail(e.target.value)}
-                                        />
                                     </div>
                                     <div className="border-t mt-8">
                                         <button
-                                            onClick={() => createOrder()}
+                                            onClick={handleOpenModal}
                                             className="bg-indigo-500 font-semibold hover:bg-indigo-600 py-3 text-sm text-white uppercase w-full"
-                                            style={{ opacity: isDisabled ? 0.6 : 1, cursor: isDisabled ? 'not-allowed' : 'pointer' }}
-                                            disabled={isDisabled}
                                         >
                                             Efectuar pago
                                         </button>
+                                        <Modal
+                                            isOpen={showModal}
+                                            onRequestClose={handleCloseModal}
+                                            className="flex items-center justify-center mx-auto"
+                                            overlayClassName="fixed inset-0 bg-gray-500 bg-opacity-75"
+                                            ariaHideApp={false}
+                                            shouldCloseOnOverlayClick={true}
+                                        >
+                                            <div className="relative bg-white p-4 rounded-lg max-w-[500px] m-4">
+                                                <button
+                                                    className="absolute top-2 right-2 text-gray-500 hover:text-gray-800"
+                                                    onClick={handleCloseModal}
+                                                >
+                                                    <svg
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                        className="h-6 w-6"
+                                                        fill="none"
+                                                        viewBox="0 0 24 24"
+                                                        stroke="currentColor"
+                                                    >
+                                                        <path
+                                                            strokeLinecap="round"
+                                                            strokeLinejoin="round"
+                                                            strokeWidth={2}
+                                                            d="M6 18L18 6M6 6l12 12"
+                                                        />
+                                                    </svg>
+                                                </button>
+                                                <div className="max-h-[580px] overflow-y-auto">
+                                                    <Payment
+                                                        price={totalCost}
+                                                        user={user}
+                                                    />
+                                                </div>
+                                            </div>
+                                        </Modal>
                                     </div>
                                 </div>
                             </div>
@@ -312,7 +321,7 @@ export default function CartComponent() {
                                                     </svg>
                                                 </button>
                                                 <div className="max-h-[580px] overflow-y-auto">
-                                                    <Payment 
+                                                    <Payment
                                                         price={totalCost}
                                                         user={user}
                                                     />

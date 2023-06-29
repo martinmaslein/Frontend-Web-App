@@ -2,17 +2,18 @@ import Order from "./order";
 import { Cookies } from 'react-cookie';
 import { useState, useEffect } from 'react'
 import axios from "axios";
+import { constantes } from "../components/pages/utils";
 
 export default function MyOrders() {
 
-    const [orders, setOrders] = useState([])
+    const [orders, setOrders] = useState([]);
+    const apiUrl = constantes.REACT_APP_API_URL;
 
     const fetchOrders = async () => {
         const cookie = new Cookies();
         const token = cookie.get("auth_token");
-        const API_URL = 'http://127.0.0.1:8000/rest'
 
-        axios.get(API_URL + '/orders', {
+        axios.get(apiUrl + '/orders', {
             headers: {
                 Authorization: `Bearer ${token}`
             }

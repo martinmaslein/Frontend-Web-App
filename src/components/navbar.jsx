@@ -11,6 +11,8 @@ import { Cookies } from 'react-cookie';
 import { useMediaQuery } from 'react-responsive';
 import axios from 'axios';
 import { useAuth } from "../hooks/useAuth";
+import { constantes } from "../components/pages/utils";
+
 
 const navigation = {
   categories: [
@@ -98,11 +100,11 @@ export default function Example() {
   const isMobile = useMediaQuery({ maxWidth: 767 });
   const [open, setOpen] = useState(false)
   const [products, setProducts] = useState([]);
+  const apiUrl = constantes.REACT_APP_API_URL;
+  
 
   const fetchProducts = async () => {
-    const API_URL = import.meta.env.VITE_REACT_APP_API_URL;
-    const response = await fetch(API_URL + '/products');
-
+    const response = await fetch(apiUrl + 'products');
     const data = await response.json();
     const productsData = data.products.data;
     setProducts(productsData);
@@ -120,7 +122,7 @@ export default function Example() {
   useEffect(() => {
     let token = cookie.get("auth_token");
     if (token !== undefined && token != null) {
-      axios.get('http://127.0.0.1:8000/rest/user', {
+      axios.get(apiUrl + 'user', {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -184,7 +186,7 @@ export default function Example() {
       redirect: 'follow'
     };
 
-    fetch("http://127.0.0.1:8000/rest/logout", requestOptions)
+    fetch(apiUrl + 'logout', requestOptions)
       .then(() => {
         setLogout();
       }).catch(err => {

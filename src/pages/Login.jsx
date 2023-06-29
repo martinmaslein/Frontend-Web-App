@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useAuth } from '../hooks/useAuth';
 import { useForm } from "../hooks/useForm";
 import axios from 'axios';
+import { constantes } from "../components/pages/utils";
 
 export default function Login() {
 
@@ -9,18 +10,19 @@ export default function Login() {
   const [password, setPassword] = useState('');
   const { setAsLogged } = useAuth();
   const { setErrors, setMessage } = useForm();
+  const apiUrl = constantes.REACT_APP_API_URL;
 
   const makeRequest = (e) => {
     e.preventDefault();
     setErrors(null);
     setMessage('');
-    axios.get('http://127.0.0.1:8000/sanctum/csrf-cookie').then(() => {
+    axios.get(apiUrl + 'sanctum/csrf-cookie').then(() => {
       const payload = {
         email,
         password
       };
 
-      axios.post('http://127.0.0.1:8000/rest/login', payload, { headers: { 'Accept': 'application/json' } }).then(response => {
+      axios.post(apiUrl + 'login', payload, { headers: { 'Accept': 'application/json' } }).then(response => {
         if (response.data.token) {
           setAsLogged(response.data.token);
         }

@@ -2,6 +2,7 @@ import React, { createContext, useContext, useEffect } from 'react';
 import { Cookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { constantes } from "../components/pages/utils";
 
 const AuthContext = createContext({
     user: null,
@@ -10,6 +11,8 @@ const AuthContext = createContext({
     setToken: () => { },
     handleLogout: () => { }
 });
+
+const apiUrl = constantes.REACT_APP_API_URL;
 
 export const AuthProvider = ({ children }) => {
     const [userData, setUserdata] = React.useState({ signedIn: false, user: null });
@@ -31,7 +34,7 @@ export const AuthProvider = ({ children }) => {
         cookie.set('is_auth', true, { path: '/', expires: getAuthCookieExpiration(), sameSite: 'lax', httpOnly: false });
         cookie.set('auth_token', user, { path: '/', sameSite: 'lax' });
 
-        axios.get('http://127.0.0.1:8000/rest/user', {
+        axios.get(apiUrl + 'user', {
             headers: {
                 Authorization: `Bearer ${user}`
             }
@@ -56,7 +59,7 @@ export const AuthProvider = ({ children }) => {
         const cookie = new Cookies();
         if (cookie.get('is_auth')) {
 
-            axios.get('http://127.0.0.1:8000/rest/user').then(response => {
+            axios.get(apiUrl + 'user').then(response => {
                 setUserdata({ signedIn: true, user: response.data.user });
                 navigate('/');
             }).catch(error => {

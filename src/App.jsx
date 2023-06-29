@@ -1,14 +1,10 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Routes, Route } from 'react-router-dom';
 import Navbar from './components/navbar';
 import Footer from './components/Footer';
 import './index.css';
 import { CookiesProvider } from 'react-cookie';
 import routes from './components/routes';
-import AuthContext from "./contexts/authContext";
-import { useAuth } from "./hooks/useAuth";
-import { useState } from "react";
-import Login from './pages/login';
 import { AuthProvider } from './hooks/useAuth';
 
 function App() {

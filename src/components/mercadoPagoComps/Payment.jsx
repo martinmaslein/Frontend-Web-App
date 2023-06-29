@@ -1,40 +1,45 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { initMercadoPago, CardPayment } from "@mercadopago/sdk-react";
 import PaymentLayout from "../../layouts/PaymentLayout";
 import Loading from "../Loading";
 import CenterContent from "src/layouts/CenterContent";
+import { Cookies } from 'react-cookie';
+import Status from 'src/components/mercadoPagoComps/Status';
 
-function Payment({ price }) {
+
+
+function Payment({ price, user }) {
 
   const API_URL = import.meta.env.VITE_REACT_APP_API_URL;
+  const PUBLIC_KEY = import.meta.env.VITE_REAT_APP_PUBLIC_KEY;
+  initMercadoPago(PUBLIC_KEY, {
+    locale: "es-AR",
+  });
 
   const [loading, setLoading] = useState(true);
   const [shown, setShown] = useState(false);
 
+  const [step, setStep] = useState(1);
+
+  const handleNextStep = () => {
+    setStep((prevStep) => prevStep + 1);
+  };
+
+  const [id, setId] = useState(null);
 
   const initialization = {
     amount: price,
-    // payer: {
-    //   email: user.email,   --> Aca habria que poner el mail con el que inicio sesion
-    // }, 
+    payer: {
+      email: user.email,
+    },
   };
 
-  // const customization = {
-  //   visual: {
-  //     style: {
-  //       customVariables: {           --> Ver si queremos cambiar el color del boton
-  //         textPrimaryColor: 'string',
-  //         textSecondaryColor: 'string'
-  //       }
-  //     }
-  //   }
-  // };
-
+  const cookie = new Cookies();
 
   const onSubmit = async (formData) => {
-    const token = await getAccessTokenSilently();
+    let token = cookie.get("auth_token");
     return new Promise((resolve, reject) => {
-      fetch(API_URL + "/comprar/auth", {
+      fetch("http://127.0.0.1:8000/rest/comprar/auth", {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -44,28 +49,23 @@ function Payment({ price }) {
         body: JSON.stringify(formData),
       })
         .then((response) => {
-          if (!response.ok) throw new Error("Error");
           return response.json();
         })
-        .then((data) => {
-          if (data.status !== undefined && data.status === "approved") {
-            setCompra({ ...compra, forma_de_pago: "MercadoPago #" + data.id });
-          }
-          handleNextStep();
-        })
         .then((response) => {
+          setId(response.id);
+          handleNextStep();
           resolve();
         })
         .catch((error) => {
-          handleNextStep();
+          console.log("Error en el fetch", error);
           reject();
         });
     });
   };
 
 
+
   const onError = async (error) => {
-    // callback called for all Brick error cases
     console.log(error);
   };
 
@@ -95,7 +95,6 @@ function Payment({ price }) {
 
           <CardPayment
             initialization={initialization}
-            // customization={customization}
             onSubmit={onSubmit}
             onReady={onReady}
             onError={onError}
@@ -107,10 +106,28 @@ function Payment({ price }) {
 
   return (
 
-    <PaymentLayout
-      title={TITULO}
-      content={CONTENT}
-    />
+    <div>
+      {step === 1 && (
+        <div>
+          <h2>Paso 1</h2>
+          <PaymentLayout
+            title={TITULO}
+            content={CONTENT}
+          />
+        </div>
+      )}
+
+      {step === 2 && (
+        <div>
+          {id && (
+            <Status
+              payment_id={id}
+            />
+          )}
+        </div>
+      )}
+
+    </div>
 
   );
 }

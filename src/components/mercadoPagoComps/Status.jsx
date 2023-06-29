@@ -4,15 +4,13 @@ import StatusLayout from "../../layouts/StatusLayout";
 import Loading from "../Loading";
 import CenterContent from "src/layouts/CenterContent";
 
-function Status() {
+function Status({payment_id}) {
 
     const [loading, setLoading] = useState(true);
     const [shown, setShown] = useState(false);
 
-    //El paymentId que se debe enviar a Brick para su inicialización es el ID que devuelve la API
-    // de Pagos al generar un pago con Mercado Pago. 
     const initialization = {
-        paymentId: '<PAYMENT_ID>', // id de pago para mostrar
+        paymentId: payment_id, 
     };
     const onError = async (error) => {
         console.log(error);

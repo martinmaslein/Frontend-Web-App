@@ -1,4 +1,4 @@
-import { Fragment, useState, useEffect, useContext } from 'react'
+import { Fragment, useState, useEffect } from 'react'
 import { Popover } from '@headlessui/react'
 import { Bars3Icon, ShoppingBagIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { Dialog, Tab, Transition } from '@headlessui/react';
@@ -10,9 +10,7 @@ import { useCookies } from 'react-cookie';
 import { Cookies } from 'react-cookie';
 import { useMediaQuery } from 'react-responsive';
 import axios from 'axios';
-import AuthContext from "../contexts/authContext";
 import { useAuth } from "../hooks/useAuth";
-
 
 const navigation = {
   categories: [
@@ -112,81 +110,82 @@ export default function Example() {
   };
 
   const cookie = new Cookies();
-  const [authToken, setAuthToken] = useState(null);
-  const [user, setUser] = useState(null);
-  const { authData, setAuthData } = useContext(AuthContext);
-  const { setLogout } = useAuth();
+  const { userData, setLogout, setUserdata } = useAuth();
   const [isLoading, setIsLoading] = useState(true);
 
+  useEffect(() => {
+    console.log(userData);
+  }, [userData])
 
   useEffect(() => {
     let token = cookie.get("auth_token");
-    setAuthToken(token);
-    axios.get('http://127.0.0.1:8000/rest/user', {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    }).then(response => {
-      setUser(response.data.user);
-      setIsLoading(false);
-    });
+    if (token !== undefined && token != null) {
+      axios.get('http://127.0.0.1:8000/rest/user', {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }).then(response => {
+        setUserdata(response.data.user);
+        setIsLoading(false);
+      });
+    }
   }, []);
 
   const renderLinks = () => {
-    if (!authData.signedIn && authToken === undefined) {
+    console.log("userData = ", userData)
+    if (userData.user === null || userData.singedIn === false) {
       return (
-        <>
+        <ul className="list-none flex">
           <li className="nav-item">
-            <Link className="nav-link" to="/login">Login</Link>
+            <Link className="nav-link text-white bg-red-600 rounded-md py-2 px-4 text-white mr-4" to="/login">Iniciar sesión</Link>
           </li>
           <li className="nav-item">
-            <Link className="nav-link" to="/register">Register</Link>
+            <Link className="nav-link text-white bg-red-600 rounded-md py-2 px-4 text-white" to="/register">Registrarse</Link>
           </li>
-        </>
+        </ul>
       );
     }
 
-    if (!isLoading) {
-      return (
-        <>
-          {user && (
-            <ul className="navbar-nav">
-              <li className="nav-item">
-                <span className="nav-link text-gray-800">Hola, {user.name}</span>
-              </li>
-            </ul>
-          )}
-
-          <ul className="navbar-nav">
-            <li className="nav-item">
-              <a
-                className="nav-link text-gray-800 cursor-pointer"
-                href="#"
-                onClick={handleLogout}
-              >
-                Cerrar sesión
-              </a>
+    return (
+      <div className="flex items-center">
+        {userData.user && (
+          <ul className="flex items-center">
+            <li className="mr-4">
+              <span className="text-gray-500">Hola,</span>{" "}
+              <span className="font-bold">{userData.user.name}</span>
             </li>
           </ul>
-        </>
+        )}
 
-      );
-    }
+        <ul className="flex items-center">
+          <li>
+            <button
+              className="text-gray-800 px-4 py-2 rounded bg-red-500 hover:bg-red-600 text-white cursor-pointer"
+              onClick={handleLogout}
+            >
+              Cerrar sesión
+            </button>
+          </li>
+        </ul>
+      </div>
+    );
+
   }
 
   const handleLogout = () => {
+    let token = cookie.get("auth_token");
     var myHeaders = new Headers();
-    myHeaders.append("Authorization", "Bearer 29|AdzsK4OVAOo0hWxRDZ0lRgQxYdR6A7hrWIYK1BIK");
+    myHeaders.append("Authorization", "Bearer " + token);
 
     var requestOptions = {
       method: 'POST',
       headers: myHeaders,
+      mode: 'cors',
       redirect: 'follow'
     };
 
     fetch("http://127.0.0.1:8000/rest/logout", requestOptions)
       .then(() => {
-        console.log("fermin");
         setLogout();
       }).catch(err => {
         console.log(err);

@@ -12,7 +12,7 @@ export default function MyOrders() {
         const cookie = new Cookies();
         const token = cookie.get("auth_token");
 
-        axios.get(apiUrl + '/orders', {
+        axios.get(apiUrl + 'orders', {
             headers: {
                 Authorization: `Bearer ${token}`
             }

@@ -1,39 +1,29 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useAuth } from '../hooks/useAuth';
-import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import { getUser, register } from '../services/AuthService';
 import { useForm } from "../hooks/useForm";
 import axios from 'axios';
-import { useCookies } from 'react-cookie';
 
 export default function Register() {
-  const { setUser, setToken } = useAuth();
-  const [nameError, setNameError] = useState('');
-  const [emailError, setEmailError] = useState('');
-  const [passwordError, setPasswordError] = useState('');
-  // const navigate = useNavigate();
+  const [nameError] = useState('');
+  const [emailError] = useState('');
+  const [passwordError] = useState('');
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const { setErrors, renderFieldError, navigate } = useForm();
-  const [cookies, setCookie] = useCookies(['tokens']);
+  const { setErrors, navigate } = useForm();
 
   const makeRequest = (e) => {
     
     e.preventDefault();
     setErrors(null);
     
-    
     axios.post('http://127.0.0.1:8000/rest/register', {
       name,
       email,
       password,
     }).then(response => {
-
       if (response.data.token) {
-        console.log("asd2");
         alert("Register success");
         navigate('/login');
       }

@@ -28,8 +28,7 @@ export default function Login() {
       const payload = {
         email,
         password
-      };
-
+      }
       if (remember) {
         payload.remember = true;
       }

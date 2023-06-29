@@ -7,7 +7,7 @@ import { BrowserRouter} from 'react-router-dom';
 
 const PUBLIC_KEY = import.meta.env.VITE_REAT_APP_PUBLIC_KEY;
 initMercadoPago(PUBLIC_KEY, {
-  locale: "es",
+  locale: "es-AR",
 });
 
 

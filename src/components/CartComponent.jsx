@@ -10,6 +10,7 @@ import axios from 'axios';
 import AuthContext from "src/contexts/authContext";
 import { useAuth } from "src/hooks/useAuth";
 import { apiUrl } from "../utils/constantes";
+import { Link } from 'react-router-dom';
 
 export default function CartComponent() {
 
@@ -44,8 +45,7 @@ export default function CartComponent() {
                 console.error("Error en la solicitud:", error);
             });
     }, []);
-
-    // Modal MP
+    
     const [showModal, setShowModal] = useState(false);
     const handleOpenModal = () => {
         setShowModal(true);
@@ -59,12 +59,6 @@ export default function CartComponent() {
         setIsModalOpen(false);
     };
 
-    const validateEmail = (email) => {
-        const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
-        return emailRegex.test(email);
-    };
-
-    const isDisabled = !(address.trim().length > 0 && name.trim().length > 0 && validateEmail(email));
 
     function reversePage() {
         navigate(-1);
@@ -81,44 +75,6 @@ export default function CartComponent() {
     useEffect(() => {
         newTotalCost();
     }, [cartItems]);
-
-    const createOrder = async () => {
-
-        const email = document.getElementById("email").value;
-        const address = document.getElementById("address").value;
-        const name = document.getElementById("name").value;
-        const orderData = { delivery_address: address, email: email, name: name, details: [] };
-
-        cartItems.map((item, index) => {
-            orderData.details[index] = { quantity: item.quantity, product_id: item.id };
-        });
-
-        sendOrder(orderData);
-    };
-
-    const sendOrder = async (orderData) => {
-        try {
-            const API_URL = import.meta.env.VITE_REACT_APP_API_URL;
-            const response = await fetch(API_URL + '/orders/create', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(orderData),
-            });
-
-            if (response.ok) {
-                console.log('Orden creada correctamente');
-                cartItems.splice(0, cartItems.length);
-                setIsModalOpen(true);
-                setCookie('cart', cartItems, { path: '/' });
-            } else {
-                console.log(response);
-            }
-        } catch (error) {
-            console.log('Error:', error);
-        }
-    };
 
     return (
         <div>
@@ -301,25 +257,12 @@ export default function CartComponent() {
                                             shouldCloseOnOverlayClick={true}
                                         >
                                             <div className="relative bg-white p-4 rounded-lg max-w-[500px] m-4">
-                                                <button
-                                                    className="absolute top-2 right-2 text-gray-500 hover:text-gray-800"
-                                                    onClick={handleCloseModal}
-                                                >
-                                                    <svg
-                                                        xmlns="http://www.w3.org/2000/svg"
-                                                        className="h-6 w-6"
-                                                        fill="none"
-                                                        viewBox="0 0 24 24"
-                                                        stroke="currentColor"
-                                                    >
-                                                        <path
-                                                            strokeLinecap="round"
-                                                            strokeLinejoin="round"
-                                                            strokeWidth={2}
-                                                            d="M6 18L18 6M6 6l12 12"
-                                                        />
+                                                <Link to="/" className="absolute top-2 right-2 text-gray-500 hover:text-gray-800">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                                                     </svg>
-                                                </button>
+                                                </Link>
+
                                                 <div className="max-h-[580px] overflow-y-auto">
                                                     <Payment
                                                         price={totalCost}

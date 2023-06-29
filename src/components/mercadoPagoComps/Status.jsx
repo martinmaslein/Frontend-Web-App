@@ -3,7 +3,7 @@ import { StatusScreen } from '@mercadopago/sdk-react';
 import StatusLayout from "../../layouts/StatusLayout";
 import Loading from "../Loading";
 import CenterContent from "src/layouts/CenterContent";
-import { Link } from 'react-router-dom';
+
 
 function Status({ payment_id }) {
 
@@ -50,10 +50,6 @@ function Status({ payment_id }) {
             <StatusLayout
                 content={CONTENT}
             />
-            <Link to="/" className="bg-green-500 font-semibold hover:bg-green-600 py-3 text-sm text-white uppercase w-full">
-                Aceptar
-            </Link>
-
         </div>
     );
 }

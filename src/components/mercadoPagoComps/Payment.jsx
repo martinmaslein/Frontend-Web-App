@@ -11,8 +11,35 @@ import { apiUrl } from "src/utils/constantes";
 
 function Payment({ price, user }) {
 
-  const API_URL = import.meta.env.VITE_REACT_APP_API_URL;
-  const PUBLIC_KEY = import.meta.env.VITE_REAT_APP_PUBLIC_KEY;
+  const createOrder = async (email, name) => {
+
+    const address = "";
+    const orderData = { delivery_address: address, email: email, name: name, details: [] };
+
+    sendOrder(orderData);
+  };
+
+  const sendOrder = async (orderData) => {
+    try {
+      const API_URL = import.meta.env.VITE_REACT_APP_API_URL;
+      const response = await fetch(API_URL + '/orders/create', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(orderData),
+      });
+
+      if (response.ok) {
+        console.log('Orden creada correctamente');
+      } else {
+        console.log(response);
+      }
+    } catch (error) {
+      console.log('Error:', error);
+    }
+  };
+
   initMercadoPago("TEST-9bb71dcc-9e11-4fed-ae79-1c3249f396e1", {
     locale: "es-AR",
   });
@@ -53,7 +80,9 @@ function Payment({ price, user }) {
           return response.json();
         })
         .then((response) => {
-          console.log(response);
+          if(response.status === "approved"){
+            createOrder(response.email, response.name);
+          }
           setId(response.id);
           handleNextStep();
           resolve();

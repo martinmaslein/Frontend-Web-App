@@ -21,8 +21,7 @@ function Payment({ price, user }) {
 
   const sendOrder = async (orderData) => {
     try {
-      const API_URL = import.meta.env.VITE_REACT_APP_API_URL;
-      const response = await fetch(API_URL + '/orders/create', {
+      const response = await fetch(apiUrl + '/orders/create', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

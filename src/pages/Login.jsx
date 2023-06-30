@@ -15,7 +15,7 @@ export default function Login() {
     e.preventDefault();
     setErrors(null);
     setMessage('');
-    axios.get('http://127.0.0.1:8000/sanctum/csrf-cookie').then(() => {
+    axios.get('https://hughes-maslein-laravel-qe45t662h-hughes-maslein-laravel.vercel.app/sanctum/csrf-cookie').then(() => {
       const payload = {
         email,
         password

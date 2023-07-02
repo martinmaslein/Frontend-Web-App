@@ -45,6 +45,9 @@ const SearchBar = () => {
     filterProducts();
   };
 
+  const clearSearchField = () => {
+    setSearchTerm('');
+  };
 
   return (
     <div className="p-4">
@@ -63,7 +66,9 @@ const SearchBar = () => {
                 key={product.id}
                 className="p-2 border border-gray-300 rounded"
               >
-                <Link to={`/Product/${product.id}/${encodeURIComponent(product.name)}`}>{product.name}</Link>
+                <Link to={`/Product/${product.id}/${encodeURIComponent(product.name)}`} onClick={clearSearchField}>
+                  {product.name}
+                </Link>
               </li>
             ))}
           </ul>

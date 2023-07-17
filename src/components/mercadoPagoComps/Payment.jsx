@@ -3,7 +3,7 @@ import { initMercadoPago, CardPayment } from "@mercadopago/sdk-react";
 import PaymentLayout from "../../layouts/PaymentLayout";
 import Loading from "../Loading";
 import CenterContent from "src/layouts/CenterContent";
-import { Cookies } from 'react-cookie';
+import { Cookies, useCookies  } from 'react-cookie';
 import Status from 'src/components/mercadoPagoComps/Status';
 import { apiUrl } from "src/utils/constantes";
 
@@ -11,17 +11,24 @@ import { apiUrl } from "src/utils/constantes";
 
 function Payment({ price, user }) {
 
-  const createOrder = async (email, name) => {
+  const [cookies, setCookie] = useCookies(['cart']);
+  const cartItems = cookies.cart || [];
 
-    const address = "";
-    const orderData = { delivery_address: address, email: email, name: name, details: [] };
+  const createOrder = async (email, name, mpID) => {
+
+    const address = "Terrada 341";
+    const orderData = { delivery_address: address, email: email, name: name, details: [], mpID: mpID };
+
+    cartItems.map((item, index) => {
+      orderData.details[index] = { quantity: item.quantity, product_id: item.id };
+    });
 
     sendOrder(orderData);
   };
 
   const sendOrder = async (orderData) => {
     try {
-      const response = await fetch(apiUrl + '/orders/create', {
+      const response = await fetch(apiUrl + 'orders/create', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -31,6 +38,8 @@ function Payment({ price, user }) {
 
       if (response.ok) {
         console.log('Orden creada correctamente');
+        cartItems.splice(0, cartItems.length);
+        setCookie('cart', cartItems, { path: '/' })
       } else {
         console.log(response);
       }
@@ -79,8 +88,8 @@ function Payment({ price, user }) {
           return response.json();
         })
         .then((response) => {
-          if(response.status === "approved"){
-            createOrder(response.email, response.name);
+          if (response.status === "approved") {
+            createOrder(user.email, user.name, response.id);
           }
           setId(response.id);
           handleNextStep();

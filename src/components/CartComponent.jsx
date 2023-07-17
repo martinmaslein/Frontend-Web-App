@@ -16,6 +16,7 @@ export default function CartComponent() {
 
 
     const isMobile = useMediaQuery({ maxWidth: 767 });
+    let state = false;
 
     const [cookies, setCookie] = useCookies(['cart']);
     const cartItems = cookies.cart || [];
@@ -169,6 +170,7 @@ export default function CartComponent() {
                                                     <Payment
                                                         price={totalCost}
                                                         user={user}
+                                                        products={cartItems}
                                                     />
                                                 </div>
                                             </div>

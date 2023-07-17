@@ -115,7 +115,7 @@ export default function Example() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    console.log(userData);
+    // console.log(userData);
   }, [userData])
 
   useEffect(() => {
@@ -133,8 +133,7 @@ export default function Example() {
   }, []);
 
   const renderLinks = () => {
-    console.log("userData = ", userData)
-    if (userData.user === null || userData.singedIn === false) {
+    if (userData.user === null || userData.signedIn === false) {
       return (
         <ul className="list-none flex">
           <li className="nav-item">
@@ -149,17 +148,19 @@ export default function Example() {
 
     return (
       <div className="flex items-center">
-        {userData.user && (
-          <ul className="list-none flex">
-            <li className="mr-4">
-              <span className="text-gray-500">Hola,</span>{" "}
-              <span className="font-bold">{userData.user.name}</span>
-            </li>
-            <li className="nav-item px-4">
-              <Link className="text-gray-800 px-4 py-2 rounded bg-red-500 hover:bg-red-600 text-white cursor-pointer" to="/myOrders">Mis órdenes</Link>
-            </li>
-          </ul>
-        )}
+        <ul className="list-none flex">
+          <li className="mr-4">
+            {userData.user && (
+              <>
+                <span className="text-gray-500">Hola,</span>{" "}
+                <span className="font-bold">{userData.user.name}</span>
+              </>
+            )}
+          </li>
+          <li className="nav-item px-4">
+            <Link className="text-gray-800 px-4 py-2 rounded bg-red-500 hover:bg-red-600 text-white cursor-pointer" to="/myOrders">Mis órdenes</Link>
+          </li>
+        </ul>
 
         <ul className="flex items-center">
           <li>
@@ -173,8 +174,8 @@ export default function Example() {
         </ul>
       </div>
     );
-
   }
+
 
   const handleLogout = () => {
     let token = cookie.get("auth_token");
